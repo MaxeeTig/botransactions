@@ -1,5 +1,7 @@
 import xml.etree.ElementTree as ET
 import mysql.connector
+from mysql.connector import errorcode
+
 
 # Database connection parameters
 db_config = {
@@ -57,7 +59,19 @@ def parse_xml(file_path):
     return customers
 
 def insert_customers(customers):
+try:
     conn = mysql.connector.connect(**db_config)
+    
+except mysql.connector.Error as err:
+    if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+        print("Something is wrong with your user name or password")
+    elif err.errno == errorcode.ER_BAD_DB_ERROR:
+        print("Database does not exist")
+    else:
+        print(err)
+else:
+    print ("Connect to DB successfull!")
+
     cursor = conn.cursor()
 
     for customer in customers:
