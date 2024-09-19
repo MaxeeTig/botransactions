@@ -2,14 +2,14 @@ import xml.etree.ElementTree as ET
 import mysql.connector
 from mysql.connector import errorcode
 
-
 # Database connection parameters
 db_config = {
-    'user': 'your_username',
-    'password': 'your_password',
-    'host': 'your_host',
-    'database': 'your_database'
+    'user': 'root',
+    'password': 'WYzMP2trak',
+    'host': 'localhost',
+    'database': 'botransactions'
 }
+
 
 def parse_xml(file_path):
     tree = ET.parse(file_path)
@@ -59,6 +59,7 @@ def parse_xml(file_path):
     return customers
 
 def insert_customers(customers):
+
 try:
     conn = mysql.connector.connect(**db_config)
     
