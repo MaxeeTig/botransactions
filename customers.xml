@@ -77,7 +77,7 @@
             <contract_type>CNTPPRCR</contract_type>
             <product_id>5</product_id>
             <product_number>5</product_number>
-            <start_date></start_date>
+            <start_date>2014-03-07</start_date>
         </contract>
         <person person_id="700000000118">
             <person_title>PTTLDCTR</person_title>
@@ -93,7 +93,7 @@
             <identity_card>
                 <id_type>IDTP0001</id_type>
                 <id_series>2211</id_series>
-                <id_number></id_number>
+                <id_number>456</id_number>
             </identity_card>
         </person>
         <contact contact_id="700000000419">
