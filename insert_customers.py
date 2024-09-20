@@ -35,15 +35,15 @@ def parse_xml(file_path):
                 'start_date': customer.find('ns:contract/ns:start_date', namespace).text
             },
             'person': {
-                'person_id': customer.find('ns:person', namespace).get('person_id'),
-                'surname': customer.find('ns:person/ns:person_name/ns:surname', namespace).text,
-                'first_name': customer.find('ns:person/ns:person_name/ns:first_name', namespace).text,
+                'person_id': customer.find('ns:person', namespace).get('person_id') if customer.find('ns:person', namespace) is not None else None,
+                'surname': customer.find('ns:person/ns:person_name/ns:surname', namespace).text if customer.find('ns:person/ns:person_name/ns:surname', namespace) is not None else None,
+                'first_name': customer.find('ns:person/ns:person_name/ns:first_name', namespace).text if customer.find('ns:person/ns:person_name/ns:first_name', namespace) is not None else None,
                 'identity_card': {
-                    'id_type': customer.find('ns:person/ns:identity_card/ns:id_type', namespace).text,
-                    'id_series': customer.find('ns:person/ns:identity_card/ns:id_series', namespace).text,
-                    'id_number': customer.find('ns:person/ns:identity_card/ns:id_number', namespace).text
+                    'id_type': customer.find('ns:person/ns:identity_card/ns:id_type', namespace).text if customer.find('ns:person/ns:identity_card/ns:id_type', namespace) is not None else None,
+                    'id_series': customer.find('ns:person/ns:identity_card/ns:id_series', namespace).text if customer.find('ns:person/ns:identity_card/ns:id_series', namespace) is not None else None,
+                    'id_number': customer.find('ns:person/ns:identity_card/ns:id_number', namespace).text if customer.find('ns:person/ns:identity_card/ns:id_number', namespace) is not None else None
                 }
-            },
+            } if customer.find('ns:person', namespace) is not None else None,
             'address': {
                 'address_id': customer.find('ns:address', namespace).get('address_id'),
                 'address_type': customer.find('ns:address/ns:address_type', namespace).text,
