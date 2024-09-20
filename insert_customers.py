@@ -45,14 +45,14 @@ def parse_xml(file_path):
                 }
             } if customer.find('ns:person', namespace) is not None else None,
             'address': {
-                'address_id': customer.find('ns:address', namespace).get('address_id'),
-                'address_type': customer.find('ns:address/ns:address_type', namespace).text,
-                'country': customer.find('ns:address/ns:country', namespace).text,
-                'region': customer.find('ns:address/ns:address_name/ns:region', namespace).text,
-                'city': customer.find('ns:address/ns:address_name/ns:city', namespace).text,
-                'street': customer.find('ns:address/ns:address_name/ns:street', namespace).text,
-                'house': customer.find('ns:address/ns:house', namespace).text
-            }
+                'address_id': customer.find('ns:address', namespace).get('address_id') if customer.find('ns:address', namespace) is not None else None,
+                'address_type': customer.find('ns:address/ns:address_type', namespace).text if customer.find('ns:address/ns:address_type', namespace) is not None else None,
+                'country': customer.find('ns:address/ns:country', namespace).text if customer.find('ns:address/ns:country', namespace) is not None else None,
+                'region': customer.find('ns:address/ns:address_name/ns:region', namespace).text if customer.find('ns:address/ns:address_name/ns:region', namespace) is not None else None,
+                'city': customer.find('ns:address/ns:address_name/ns:city', namespace).text if customer.find('ns:address/ns:address_name/ns:city', namespace) is not None else None,
+                'street': customer.find('ns:address/ns:address_name/ns:street', namespace).text if customer.find('ns:address/ns:address_name/ns:street', namespace) is not None else None,
+                'house': customer.find('ns:address/ns:house', namespace).text if customer.find('ns:address/ns:house', namespace) is not None else None
+            } if customer.find('ns:address', namespace) is not None else None,
         }
         customers.append(customer_data)
 
