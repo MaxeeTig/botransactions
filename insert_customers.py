@@ -110,31 +110,33 @@ def insert_customers(customers):
             INSERT INTO persons (person_id, customer_id, surname, first_name, id_type, id_series, id_number)
             VALUES (%s, %s, %s, %s, %s, %s, %s)
             """
-            cursor.execute(insert_person_query, (
-                customer['person']['person_id'],
-                customer['customer_id'],
-                customer['person']['surname'],
-                customer['person']['first_name'],
-                customer['person']['identity_card']['id_type'],
-                customer['person']['identity_card']['id_series'],
-                customer['person']['identity_card']['id_number']
-            ))
+            if customer['person'] is not None:
+                cursor.execute(insert_person_query, (
+                    customer['person']['person_id'],
+                    customer['customer_id'],
+                    customer['person']['surname'],
+                    customer['person']['first_name'],
+                    customer['person']['identity_card']['id_type'],
+                    customer['person']['identity_card']['id_series'],
+                    customer['person']['identity_card']['id_number']
+                ))
 
             # Insert address data
             insert_address_query = """
             INSERT INTO addresses (address_id, customer_id, address_type, country, region, city, street, house)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
             """
-            cursor.execute(insert_address_query, (
-                customer['address']['address_id'],
-                customer['customer_id'],
-                customer['address']['address_type'],
-                customer['address']['country'],
-                customer['address']['region'],
-                customer['address']['city'],
-                customer['address']['street'],
-                customer['address']['house']
-            ))
+            if customer['address'] is not None:
+                cursor.execute(insert_address_query, (
+                    customer['address']['address_id'],
+                    customer['customer_id'],
+                    customer['address']['address_type'],
+                    customer['address']['country'],
+                    customer['address']['region'],
+                    customer['address']['city'],
+                    customer['address']['street'],
+                    customer['address']['house']
+                ))
 
         conn.commit()
         cursor.close()
