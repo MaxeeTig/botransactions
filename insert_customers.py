@@ -59,87 +59,86 @@ def parse_xml(file_path):
     return customers
 
 def insert_customers(customers):
-
-try:
-    conn = mysql.connector.connect(**db_config)
-    
-except mysql.connector.Error as err:
-    if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-        print("Something is wrong with your user name or password")
-    elif err.errno == errorcode.ER_BAD_DB_ERROR:
-        print("Database does not exist")
+    try:
+        conn = mysql.connector.connect(**db_config)
+        
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
     else:
-        print(err)
-else:
-    print ("Connect to DB successfull!")
+        print ("Connect to DB successfull!")
 
-    cursor = conn.cursor()
+        cursor = conn.cursor()
 
-    for customer in customers:
-        # Insert customer data
-        insert_customer_query = """
-        INSERT INTO customers (customer_id, inst_id, customer_number, customer_relation, status)
-        VALUES (%s, %s, %s, %s, %s)
-        """
-        cursor.execute(insert_customer_query, (
-            customer['customer_id'],
-            customer['inst_id'],
-            customer['customer_number'],
-            customer['customer_relation'],
-            customer['status']
-        ))
+        for customer in customers:
+            # Insert customer data
+            insert_customer_query = """
+            INSERT INTO customers (customer_id, inst_id, customer_number, customer_relation, status)
+            VALUES (%s, %s, %s, %s, %s)
+            """
+            cursor.execute(insert_customer_query, (
+                customer['customer_id'],
+                customer['inst_id'],
+                customer['customer_number'],
+                customer['customer_relation'],
+                customer['status']
+            ))
 
-        # Insert contract data
-        insert_contract_query = """
-        INSERT INTO contracts (contract_id, customer_id, contract_number, agent_id, agent_number, contract_type, product_id, product_number, start_date)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-        """
-        cursor.execute(insert_contract_query, (
-            customer['contract']['contract_id'],
-            customer['customer_id'],
-            customer['contract']['contract_number'],
-            customer['contract']['agent_id'],
-            customer['contract']['agent_number'],
-            customer['contract']['contract_type'],
-            customer['contract']['product_id'],
-            customer['contract']['product_number'],
-            customer['contract']['start_date']
-        ))
+            # Insert contract data
+            insert_contract_query = """
+            INSERT INTO contracts (contract_id, customer_id, contract_number, agent_id, agent_number, contract_type, product_id, product_number, start_date)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """
+            cursor.execute(insert_contract_query, (
+                customer['contract']['contract_id'],
+                customer['customer_id'],
+                customer['contract']['contract_number'],
+                customer['contract']['agent_id'],
+                customer['contract']['agent_number'],
+                customer['contract']['contract_type'],
+                customer['contract']['product_id'],
+                customer['contract']['product_number'],
+                customer['contract']['start_date']
+            ))
 
-        # Insert person data
-        insert_person_query = """
-        INSERT INTO persons (person_id, customer_id, surname, first_name, id_type, id_series, id_number)
-        VALUES (%s, %s, %s, %s, %s, %s, %s)
-        """
-        cursor.execute(insert_person_query, (
-            customer['person']['person_id'],
-            customer['customer_id'],
-            customer['person']['surname'],
-            customer['person']['first_name'],
-            customer['person']['identity_card']['id_type'],
-            customer['person']['identity_card']['id_series'],
-            customer['person']['identity_card']['id_number']
-        ))
+            # Insert person data
+            insert_person_query = """
+            INSERT INTO persons (person_id, customer_id, surname, first_name, id_type, id_series, id_number)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
+            """
+            cursor.execute(insert_person_query, (
+                customer['person']['person_id'],
+                customer['customer_id'],
+                customer['person']['surname'],
+                customer['person']['first_name'],
+                customer['person']['identity_card']['id_type'],
+                customer['person']['identity_card']['id_series'],
+                customer['person']['identity_card']['id_number']
+            ))
 
-        # Insert address data
-        insert_address_query = """
-        INSERT INTO addresses (address_id, customer_id, address_type, country, region, city, street, house)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-        """
-        cursor.execute(insert_address_query, (
-            customer['address']['address_id'],
-            customer['customer_id'],
-            customer['address']['address_type'],
-            customer['address']['country'],
-            customer['address']['region'],
-            customer['address']['city'],
-            customer['address']['street'],
-            customer['address']['house']
-        ))
+            # Insert address data
+            insert_address_query = """
+            INSERT INTO addresses (address_id, customer_id, address_type, country, region, city, street, house)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            """
+            cursor.execute(insert_address_query, (
+                customer['address']['address_id'],
+                customer['customer_id'],
+                customer['address']['address_type'],
+                customer['address']['country'],
+                customer['address']['region'],
+                customer['address']['city'],
+                customer['address']['street'],
+                customer['address']['house']
+            ))
 
-    conn.commit()
-    cursor.close()
-    conn.close()
+        conn.commit()
+        cursor.close()
+        conn.close()
 
 if __name__ == "__main__":
     customers = parse_xml('customers.xml')
