@@ -74,7 +74,9 @@ def insert_customers(customers):
 
         cursor = conn.cursor()
 
-        for customer in customers:
+        total_records = len(customers)
+        for i, customer in enumerate(customers, 1):
+            print(f"Inserting record {i} of {total_records}")
             # Insert customer data
             insert_customer_query = """
             INSERT INTO customers (customer_id, inst_id, customer_number, customer_relation, status)
@@ -87,6 +89,7 @@ def insert_customers(customers):
                 customer['customer_relation'],
                 customer['status']
             ))
+            print(f"Inserted record {i} of {total_records}")
 
             # Insert contract data
             insert_contract_query = """
@@ -120,6 +123,7 @@ def insert_customers(customers):
                     customer['person']['identity_card']['id_series'],
                     customer['person']['identity_card']['id_number']
                 ))
+                print(f"Inserted record {i} of {total_records}")
 
             # Insert address data
             insert_address_query = """
@@ -137,6 +141,7 @@ def insert_customers(customers):
                     customer['address']['street'],
                     customer['address']['house']
                 ))
+                print(f"Inserted record {i} of {total_records}")
 
         conn.commit()
         cursor.close()
