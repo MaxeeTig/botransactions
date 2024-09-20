@@ -143,5 +143,5 @@ def insert_customers(customers):
         conn.close()
 
 if __name__ == "__main__":
-    customers = parse_xml('customers.xml')
+    customers = parse_xml('customers_prod.xml')
     insert_customers(customers)
