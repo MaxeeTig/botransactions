@@ -41,7 +41,7 @@ def parse_xml(file_path):
             'merchant_country': operation.find('ns:merchant_country', namespace).text if operation.find('ns:merchant_country', namespace) is not None else None,
             'merchant_postcode': operation.find('ns:merchant_postcode', namespace).text if operation.find('ns:merchant_postcode', namespace) is not None else None,
             'terminal_type': operation.find('ns:terminal_type', namespace).text if operation.find('ns:terminal_type', namespace) is not None else None,
-            'terminal_number': operation.find('ns:terminal_number', namespace).text,
+            'terminal_number': operation.find('ns:terminal_number', namespace).text if operation.find('ns:terminal_number', namespace) is not None else None,
             'issuer': {
                 'inst_id': operation.find('ns:issuer/ns:inst_id', namespace).text,
                 'network_id': operation.find('ns:issuer/ns:network_id', namespace).text,
