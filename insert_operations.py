@@ -39,7 +39,7 @@ def parse_xml(file_path):
             'merchant_city': operation.find('ns:merchant_city', namespace).text if operation.find('ns:merchant_city', namespace) is not None else None,
             'merchant_region': operation.find('ns:merchant_region', namespace).text if operation.find('ns:merchant_region', namespace) is not None else None,
             'merchant_country': operation.find('ns:merchant_country', namespace).text if operation.find('ns:merchant_country', namespace) is not None else None,
-            'merchant_postcode': operation.find('ns:merchant_postcode', namespace).text,
+            'merchant_postcode': operation.find('ns:merchant_postcode', namespace).text if operation.find('ns:merchant_postcode', namespace) is not None else None,
             'terminal_type': operation.find('ns:terminal_type', namespace).text,
             'terminal_number': operation.find('ns:terminal_number', namespace).text,
             'issuer': {
