@@ -36,7 +36,7 @@ def parse_xml(file_path):
             'mcc': operation.find('ns:mcc', namespace).text if operation.find('ns:mcc', namespace) is not None else None,
             'merchant_name': operation.find('ns:merchant_name', namespace).text if operation.find('ns:merchant_name', namespace) is not None else None,
             'merchant_street': operation.find('ns:merchant_street', namespace).text if operation.find('ns:merchant_street', namespace) is not None else None,
-            'merchant_city': operation.find('ns:merchant_city', namespace).text,
+            'merchant_city': operation.find('ns:merchant_city', namespace).text if operation.find('ns:merchant_city', namespace) is not None else None,
             'merchant_region': operation.find('ns:merchant_region', namespace).text,
             'merchant_country': operation.find('ns:merchant_country', namespace).text,
             'merchant_postcode': operation.find('ns:merchant_postcode', namespace).text,
