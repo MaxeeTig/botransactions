@@ -57,7 +57,7 @@ def parse_xml(file_path):
                 'inst_id': operation.find('ns:acquirer/ns:inst_id', namespace).text if operation.find('ns:acquirer/ns:inst_id', namespace) is not None else None,
                 'network_id': operation.find('ns:acquirer/ns:network_id', namespace).text if operation.find('ns:acquirer/ns:network_id', namespace) is not None else None,
                 'merchant_id': operation.find('ns:acquirer/ns:merchant_id', namespace).text if operation.find('ns:acquirer/ns:merchant_id', namespace) is not None else None,
-                'terminal_id': operation.find('ns:acquirer/ns:terminal_id', namespace).text
+                'terminal_id': operation.find('ns:acquirer/ns:terminal_id', namespace).text if operation.find('ns:acquirer/ns:terminal_id', namespace) is not None else None,
             },
             'transactions': []
         }
