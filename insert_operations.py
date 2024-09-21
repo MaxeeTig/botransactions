@@ -51,7 +51,7 @@ def parse_xml(file_path):
                 'card_expir_date': operation.find('ns:issuer/ns:card_expir_date', namespace).text,
                 'card_country': operation.find('ns:issuer/ns:card_country', namespace).text,
                 'card_network_id': operation.find('ns:issuer/ns:card_network_id', namespace).text,
-                'auth_code': operation.find('ns:issuer/ns:auth_code', namespace).text
+                'auth_code': operation.find('ns:issuer/ns:auth_code', namespace).text if operation.find('ns:issuer/ns:auth_code', namespace) is not None else None
             },
             'acquirer': {
                 'inst_id': operation.find('ns:acquirer/ns:inst_id', namespace).text,
