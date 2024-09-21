@@ -89,7 +89,7 @@ def parse_xml(file_path):
                         'currency': transaction.find('ns:credit_entry/ns:amount/ns:currency', namespace).text if transaction.find('ns:credit_entry/ns:amount/ns:currency', namespace) is not None else None
                     }
                 },
-                'amount_purpose': transaction.find('ns:amount_purpose', namespace).text
+                'amount_purpose': transaction.find('ns:amount_purpose', namespace).text if transaction.find('ns:amount_purpose', namespace) is not None else None
             }
             operation_data['transactions'].append(transaction_data)
 
