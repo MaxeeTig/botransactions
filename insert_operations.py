@@ -74,7 +74,7 @@ def parse_xml(file_path):
                         'currency': transaction.find('ns:debit_entry/ns:account/ns:currency', namespace).text if transaction.find('ns:debit_entry/ns:account/ns:currency', namespace) is not None else None
                     },
                     'amount': {
-                        'amount_value': transaction.find('ns:debit_entry/ns:amount/ns:amount_value', namespace).text,
+                        'amount_value': transaction.find('ns:debit_entry/ns:amount/ns:amount_value', namespace).text if transaction.find('ns:debit_entry/ns:amount/ns:amount_value', namespace) is not None else None,
                         'currency': transaction.find('ns:debit_entry/ns:amount/ns:currency', namespace).text
                     }
                 },
