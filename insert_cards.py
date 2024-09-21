@@ -135,6 +135,29 @@ def insert_cards(cards):
             ))
             print(f"Inserted record {i} of {total_records}")
 
+            # Check if person_id exists in persons table
+            check_person_query = """
+            SELECT person_id FROM persons WHERE person_id = %s
+            """
+            cursor.execute(check_person_query, (card['cardholder']['person']['person_id'],))
+            person_exists = cursor.fetchone()
+
+            if not person_exists:
+                # Insert person data
+                insert_person_query = """
+                INSERT INTO persons (person_id, surname, first_name, id_type, id_series, id_number)
+                VALUES (%s, %s, %s, %s, %s, %s)
+                """
+                cursor.execute(insert_person_query, (
+                    card['cardholder']['person']['person_id'],
+                    card['cardholder']['person']['surname'],
+                    card['cardholder']['person']['first_name'],
+                    card['cardholder']['person']['identity_card']['id_type'],
+                    card['cardholder']['person']['identity_card']['id_series'],
+                    card['cardholder']['person']['identity_card']['id_number']
+                ))
+                print(f"Inserted person record {i} of {total_records}")
+
             # Insert cardholder data
             insert_cardholder_query = """
             INSERT INTO cardholders (cardholder_id, card_id, cardholder_number, cardholder_name, person_id, address_id)
@@ -148,7 +171,7 @@ def insert_cards(cards):
                 card['cardholder']['person']['person_id'],
                 card['cardholder']['address']['address_id']
             ))
-            print(f"Inserted record {i} of {total_records}")
+            print(f"Inserted cardholder record {i} of {total_records}")
 
             # Insert person data
             insert_person_query = """
