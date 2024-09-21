@@ -23,26 +23,6 @@ CREATE TABLE cardholders (
     FOREIGN KEY (address_id) REFERENCES addresses(address_id)
 );
 
-CREATE TABLE persons (
-    person_id VARCHAR(255) PRIMARY KEY,
-    surname VARCHAR(255) NOT NULL,
-    first_name VARCHAR(255) NOT NULL,
-    id_type VARCHAR(255) NOT NULL,
-    id_series VARCHAR(255) NOT NULL,
-    id_number VARCHAR(255) NOT NULL
-);
-
-CREATE TABLE addresses (
-    address_id VARCHAR(255) PRIMARY KEY,
-    address_type VARCHAR(255) NOT NULL,
-    country VARCHAR(255) NOT NULL,
-    region VARCHAR(255) NOT NULL,
-    city VARCHAR(255) NOT NULL,
-    street VARCHAR(255) NOT NULL,
-    house VARCHAR(255) NOT NULL,
-    apartment VARCHAR(255),
-    postal_code VARCHAR(255)
-);
 
 CREATE TABLE card_instances (
     instance_id VARCHAR(255) PRIMARY KEY,
