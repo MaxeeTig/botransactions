@@ -68,7 +68,7 @@ def parse_xml(file_path):
                 'transaction_type': transaction.find('ns:transaction_type', namespace).text,
                 'posting_date': transaction.find('ns:posting_date', namespace).text,
                 'debit_entry': {
-                    'entry_id': transaction.find('ns:debit_entry/ns:entry_id', namespace).text,
+                    'entry_id': transaction.find('ns:debit_entry/ns:entry_id', namespace).text if transaction.find('ns:debit_entry/ns:entry_id', namespace) is not None else None,
                     'account': {
                         'account_number': transaction.find('ns:debit_entry/ns:account/ns:account_number', namespace).text,
                         'currency': transaction.find('ns:debit_entry/ns:account/ns:currency', namespace).text
