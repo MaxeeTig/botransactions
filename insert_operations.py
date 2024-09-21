@@ -30,7 +30,7 @@ def parse_xml(file_path):
                 'amount_value': operation.find('ns:oper_amount/ns:amount_value', namespace).text,
                 'currency': operation.find('ns:oper_amount/ns:currency', namespace).text
             },
-            'originator_refnum': operation.find('ns:originator_refnum', namespace).text,
+            'originator_refnum': operation.find('ns:originator_refnum', namespace).text if operation.find('ns:originator_refnum', namespace) is not None else None,
             'is_reversal': operation.find('ns:is_reversal', namespace).text,
             'merchant_number': operation.find('ns:merchant_number', namespace).text,
             'mcc': operation.find('ns:mcc', namespace).text,
