@@ -115,16 +115,25 @@ def insert_customers(customers):
             VALUES (%s, %s, %s, %s, %s, %s, %s)
             """
             if customer['person'] is not None:
-                cursor.execute(insert_person_query, (
-                    customer['person']['person_id'],
-                    customer['customer_id'],
-                    customer['person']['surname'],
-                    customer['person']['first_name'],
-                    customer['person']['identity_card']['id_type'],
-                    customer['person']['identity_card']['id_series'],
-                    customer['person']['identity_card']['id_number']
-                ))
-                print(f"Inserted record {i} of {total_records}")
+                check_person_query = """
+                SELECT person_id FROM persons WHERE person_id = %s
+                """
+                cursor.execute(check_person_query, (customer['person']['person_id'],))
+                existing_person = cursor.fetchone()
+
+                if existing_person is None:
+                    cursor.execute(insert_person_query, (
+                        customer['person']['person_id'],
+                        customer['customer_id'],
+                        customer['person']['surname'],
+                        customer['person']['first_name'],
+                        customer['person']['identity_card']['id_type'],
+                        customer['person']['identity_card']['id_series'],
+                        customer['person']['identity_card']['id_number']
+                    ))
+                    print(f"Inserted record {i} of {total_records}")
+                else:
+                    print(f"Skipped insertion for existing person with ID {customer['person']['person_id']}")
 
             # Insert address data
             insert_address_query = """
