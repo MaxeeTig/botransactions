@@ -102,23 +102,34 @@ def insert_customers(customers):
             else:
                 print(f"Skipped insertion for existing customer with ID {customer['customer_id']}")
 
-            # Insert contract data
+            # Check if contract exists
             if customer['contract'] is not None:
-                insert_contract_query = """
-                INSERT INTO contracts (contract_id, customer_id, contract_number, agent_id, agent_number, contract_type, product_id, product_number, start_date)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                check_contract_query = """
+                SELECT contract_id FROM contracts WHERE contract_id = %s
                 """
-                cursor.execute(insert_contract_query, (
-                    customer['contract']['contract_id'],
-                    customer['customer_id'],
-                    customer['contract']['contract_number'],
-                    customer['contract']['agent_id'],
-                    customer['contract']['agent_number'],
-                    customer['contract']['contract_type'],
-                    customer['contract']['product_id'],
-                    customer['contract']['product_number'],
-                    customer['contract']['start_date']
-                ))
+                cursor.execute(check_contract_query, (customer['contract']['contract_id'],))
+                existing_contract = cursor.fetchone()
+
+                if existing_contract is None:
+                    # Insert contract data
+                    insert_contract_query = """
+                    INSERT INTO contracts (contract_id, customer_id, contract_number, agent_id, agent_number, contract_type, product_id, product_number, start_date)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    """
+                    cursor.execute(insert_contract_query, (
+                        customer['contract']['contract_id'],
+                        customer['customer_id'],
+                        customer['contract']['contract_number'],
+                        customer['contract']['agent_id'],
+                        customer['contract']['agent_number'],
+                        customer['contract']['contract_type'],
+                        customer['contract']['product_id'],
+                        customer['contract']['product_number'],
+                        customer['contract']['start_date']
+                    ))
+                    print(f"Inserted contract record {i} of {total_records}")
+                else:
+                    print(f"Skipped insertion for existing contract with ID {customer['contract']['contract_id']}")
 
             # Insert person data
             insert_person_query = """
