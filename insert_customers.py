@@ -29,7 +29,7 @@ def parse_xml(file_path):
                 'contract_id': customer.find('ns:contract', namespace).get('contract_id') if customer.find('ns:contract', namespace) is not None else None,
                 'contract_number': customer.find('ns:contract/ns:contract_number', namespace).text if customer.find('ns:contract/ns:contract_number', namespace) is not None else None,
                 'agent_id': customer.find('ns:contract/ns:agent_id', namespace).text if customer.find('ns:contract/ns:agent_id', namespace) is not None else None,
-                'agent_number': customer.find('ns:contract/ns:agent_number', namespace).text if customer.find('ns:contract/ns:agent_number', namespace) is not None else None,
+                'agent_number': customer.find('ns:contract/ns:agent_number', namespace).text if customer.find('ns:contract/ns:agent_number', namespace) is not None and customer.find('ns:contract/ns:agent_number', namespace).text else '1001',
                 'contract_type': customer.find('ns:contract/ns:contract_type', namespace).text if customer.find('ns:contract/ns:contract_type', namespace) is not None else None,
                 'product_id': customer.find('ns:contract/ns:product_id', namespace).text if customer.find('ns:contract/ns:product_id', namespace) is not None else None,
                 'product_number': customer.find('ns:contract/ns:product_number', namespace).text if customer.find('ns:contract/ns:product_number', namespace) is not None else None,
