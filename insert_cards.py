@@ -264,6 +264,15 @@ def insert_cards(cards):
         cursor.close()
         conn.close()
 
+
+import sys
+
 if __name__ == "__main__":
-    cards = parse_xml('cards.xml')
+    if len(sys.argv) != 2:
+        print("Usage: python insert_cards.py <xml_file>")
+        sys.exit(1)
+
+    xml_file = sys.argv[1]
+    print(f"Parsing file: {xml_file}")
+    cards = parse_xml(xml_file)
     insert_cards(cards)

@@ -208,6 +208,15 @@ def insert_operations(operations):
         cursor.close()
         conn.close()
 
+
+import sys
+
 if __name__ == "__main__":
-    operations = parse_xml('operations.xml')
-    insert_operations(operations)
+    if len(sys.argv) != 2:
+        print("Usage: python insert_operations.py <xml_file>")
+        sys.exit(1)
+
+    xml_file = sys.argv[1]
+    print(f"Parsing file: {xml_file}")
+    operations = parse_xml(xml_file)
+    insert_operations (operations)
