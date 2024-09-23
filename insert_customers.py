@@ -23,7 +23,7 @@ def parse_xml(file_path):
             'customer_id': customer.get('customer_id'),
             'inst_id': customer.find('ns:inst_id', namespace).text,
             'customer_number': customer.find('ns:customer_number', namespace).text,
-            'customer_relation': customer.find('ns:customer_relation', namespace).text if customer.find('ns:customer_relation', namespace) is not None else None,
+            'customer_relation': customer.find('ns:customer_relation', namespace).text if customer.find('ns:customer_relation', namespace) is not None and customer.find('ns:customer_relation', namespace).text else 'RSCBEXTR',
             'status': customer.find('ns:status', namespace).text,
             'contract': {
                 'contract_id': customer.find('ns:contract', namespace).get('contract_id') if customer.find('ns:contract', namespace) is not None else None,
