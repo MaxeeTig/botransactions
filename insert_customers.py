@@ -78,19 +78,29 @@ def insert_customers(customers):
         total_records = len(customers)
         for i, customer in enumerate(customers, 1):
             print(f"Inserting record {i} of {total_records}")
-            # Insert customer data
-            insert_customer_query = """
-            INSERT INTO customers (customer_id, inst_id, customer_number, customer_relation, status)
-            VALUES (%s, %s, %s, %s, %s)
+            # Check if customer exists
+            check_customer_query = """
+            SELECT customer_id FROM customers WHERE customer_id = %s
             """
-            cursor.execute(insert_customer_query, (
-                customer['customer_id'],
-                customer['inst_id'],
-                customer['customer_number'],
-                customer['customer_relation'],
-                customer['status']
-            ))
-            print(f"Inserted record {i} of {total_records}")
+            cursor.execute(check_customer_query, (customer['customer_id'],))
+            existing_customer = cursor.fetchone()
+
+            if existing_customer is None:
+                # Insert customer data
+                insert_customer_query = """
+                INSERT INTO customers (customer_id, inst_id, customer_number, customer_relation, status)
+                VALUES (%s, %s, %s, %s, %s)
+                """
+                cursor.execute(insert_customer_query, (
+                    customer['customer_id'],
+                    customer['inst_id'],
+                    customer['customer_number'],
+                    customer['customer_relation'],
+                    customer['status']
+                ))
+                print(f"Inserted record {i} of {total_records}")
+            else:
+                print(f"Skipped insertion for existing customer with ID {customer['customer_id']}")
 
             # Insert contract data
             if customer['contract'] is not None:
