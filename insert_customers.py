@@ -1,6 +1,7 @@
 import xml.etree.ElementTree as ET
 import mysql.connector
 from mysql.connector import errorcode
+import datetime
 
 # Database connection parameters
 db_config = {
@@ -32,7 +33,7 @@ def parse_xml(file_path):
                 'contract_type': customer.find('ns:contract/ns:contract_type', namespace).text if customer.find('ns:contract/ns:contract_type', namespace) is not None else None,
                 'product_id': customer.find('ns:contract/ns:product_id', namespace).text if customer.find('ns:contract/ns:product_id', namespace) is not None else None,
                 'product_number': customer.find('ns:contract/ns:product_number', namespace).text if customer.find('ns:contract/ns:product_number', namespace) is not None else None,
-                'start_date': customer.find('ns:contract/ns:start_date', namespace).text if customer.find('ns:contract/ns:start_date', namespace) is not None else None
+                'start_date': customer.find('ns:contract/ns:start_date', namespace).text if customer.find('ns:contract/ns:start_date', namespace) is not None and customer.find('ns:contract/ns:start_date', namespace).text else datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S')
             } if customer.find('ns:contract', namespace) is not None else None,
             'person': {
                 'person_id': customer.find('ns:person', namespace).get('person_id') if customer.find('ns:person', namespace) is not None else None,
