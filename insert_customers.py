@@ -93,21 +93,22 @@ def insert_customers(customers):
             print(f"Inserted record {i} of {total_records}")
 
             # Insert contract data
-            insert_contract_query = """
-            INSERT INTO contracts (contract_id, customer_id, contract_number, agent_id, agent_number, contract_type, product_id, product_number, start_date)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-            """
-            cursor.execute(insert_contract_query, (
-                customer['contract']['contract_id'],
-                customer['customer_id'],
-                customer['contract']['contract_number'],
-                customer['contract']['agent_id'],
-                customer['contract']['agent_number'],
-                customer['contract']['contract_type'],
-                customer['contract']['product_id'],
-                customer['contract']['product_number'],
-                customer['contract']['start_date']
-            ))
+            if customer['contract'] is not None:
+                insert_contract_query = """
+                INSERT INTO contracts (contract_id, customer_id, contract_number, agent_id, agent_number, contract_type, product_id, product_number, start_date)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                """
+                cursor.execute(insert_contract_query, (
+                    customer['contract']['contract_id'],
+                    customer['customer_id'],
+                    customer['contract']['contract_number'],
+                    customer['contract']['agent_id'],
+                    customer['contract']['agent_number'],
+                    customer['contract']['contract_type'],
+                    customer['contract']['product_id'],
+                    customer['contract']['product_number'],
+                    customer['contract']['start_date']
+                ))
 
             # Insert person data
             insert_person_query = """
