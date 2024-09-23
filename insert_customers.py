@@ -41,8 +41,8 @@ def parse_xml(file_path):
                 'first_name': customer.find('ns:person/ns:person_name/ns:first_name', namespace).text if customer.find('ns:person/ns:person_name/ns:first_name', namespace) is not None else None,
                 'identity_card': {
                     'id_type': customer.find('ns:person/ns:identity_card/ns:id_type', namespace).text if customer.find('ns:person/ns:identity_card/ns:id_type', namespace) is not None and customer.find('ns:person/ns:identity_card/ns:id_type', namespace).text else 'IDTP0001',
-                    'id_series': customer.find('ns:person/ns:identity_card/ns:id_series', namespace).text if customer.find('ns:person/ns:identity_card/ns:id_series', namespace) is not None else None,
-                    'id_number': customer.find('ns:person/ns:identity_card/ns:id_number', namespace).text if customer.find('ns:person/ns:identity_card/ns:id_number', namespace) is not None else None
+                    'id_series': customer.find('ns:person/ns:identity_card/ns:id_series', namespace).text if customer.find('ns:person/ns:identity_card/ns:id_series', namespace) is not None and customer.find('ns:person/ns:identity_card/ns:id_series', namespace).text else '4599',
+                    'id_number': customer.find('ns:person/ns:identity_card/ns:id_number', namespace).text if customer.find('ns:person/ns:identity_card/ns:id_number', namespace) is not None and customer.find('ns:person/ns:identity_card/ns:id_number', namespace).text else '999999'
                 }
             } if customer.find('ns:person', namespace) is not None else None,
             'address': {
