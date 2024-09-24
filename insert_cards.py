@@ -191,19 +191,29 @@ def insert_cards(cards):
 
             # Insert cardholder data
             if card['cardholder']['person']['person_id'] is not None and card['cardholder']['address']['address_id'] is not None:
-                insert_cardholder_query = """
-                INSERT INTO cardholders (cardholder_id, card_id, cardholder_number, cardholder_name, person_id, address_id)
-                VALUES (%s, %s, %s, %s, %s, %s)
+                # Check if cardholder_id exists in cardholders table
+                check_cardholder_query = """
+                SELECT cardholder_id FROM cardholders WHERE cardholder_id = %s
                 """
-                cursor.execute(insert_cardholder_query, (
-                    card['cardholder']['cardholder_id'],
-                    card['card_id'],
-                    card['cardholder']['cardholder_number'],
-                    card['cardholder']['cardholder_name'],
-                    card['cardholder']['person']['person_id'],
-                    card['cardholder']['address']['address_id']
-                ))
-                print(f"Inserted cardholder record {i} of {total_records}")
+                cursor.execute(check_cardholder_query, (card['cardholder']['cardholder_id'],))
+                cardholder_exists = cursor.fetchone()
+
+                if not cardholder_exists:
+                    insert_cardholder_query = """
+                    INSERT INTO cardholders (cardholder_id, card_id, cardholder_number, cardholder_name, person_id, address_id)
+                    VALUES (%s, %s, %s, %s, %s, %s)
+                    """
+                    cursor.execute(insert_cardholder_query, (
+                        card['cardholder']['cardholder_id'],
+                        card['card_id'],
+                        card['cardholder']['cardholder_number'],
+                        card['cardholder']['cardholder_name'],
+                        card['cardholder']['person']['person_id'],
+                        card['cardholder']['address']['address_id']
+                    ))
+                    print(f"Inserted cardholder record {i} of {total_records}")
+                else:
+                    print(f"Skipped cardholder record {i} of {total_records} due to duplicate cardholder_id")
             else:
                 if card['cardholder']['person']['person_id'] is None:
                     print(f"Skipped cardholder record {i} of {total_records} due to missing person_id")
