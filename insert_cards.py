@@ -65,7 +65,7 @@ def parse_xml(file_path):
                 'sequential_number': card.find('ns:card_instance/ns:sequential_number', namespace).text if card.find('ns:card_instance/ns:sequential_number', namespace) is not None else None,
                 'card_status': card.find('ns:card_instance/ns:card_status', namespace).text if card.find('ns:card_instance/ns:card_status', namespace) is not None else None,
                 'card_state': card.find('ns:card_instance/ns:card_state', namespace).text if card.find('ns:card_instance/ns:card_state', namespace) is not None else None,
-                'iss_date': card.find('ns:card_instance/ns:iss_date', namespace).text if card.find('ns:card_instance/ns:iss_date', namespace) is not None else None,
+                'iss_date': card.find('ns:card_instance/ns:iss_date', namespace).text if card.find('ns:card_instance/ns:iss_date', namespace) is not None else "2013-08-03",  # Provide a default value
                 'start_date': card.find('ns:card_instance/ns:start_date', namespace).text if card.find('ns:card_instance/ns:start_date', namespace) is not None else None,
                 'expiration_date': card.find('ns:card_instance/ns:expiration_date', namespace).text if card.find('ns:card_instance/ns:expiration_date', namespace) is not None else None,
                 'pin_update_flag': card.find('ns:card_instance/ns:pin_update_flag', namespace).text if card.find('ns:card_instance/ns:pin_update_flag', namespace) is not None else None,
