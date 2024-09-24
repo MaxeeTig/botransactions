@@ -1,3 +1,4 @@
+# import cards script #
 import xml.etree.ElementTree as ET
 import mysql.connector
 from mysql.connector import errorcode
