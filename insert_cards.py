@@ -115,7 +115,7 @@ def insert_cards(cards):
 
         total_records = len(cards)
         for i, card in enumerate(cards, 1):
-            print(f"Inserting record {i} of {total_records}")
+            print(f"Inserting record {i} of {total_records} {card['customer']['customer_id']}")
             # Insert card data
             insert_card_query = """
             INSERT INTO cards (card_id, inst_id, card_number, card_mask, card_type, country, category, reg_date, customer_id, contract_id)
