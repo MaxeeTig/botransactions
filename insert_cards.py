@@ -66,14 +66,14 @@ def parse_xml(file_path):
                 'sequential_number': card.find('ns:card_instance/ns:sequential_number', namespace).text,
                 'card_status': card.find('ns:card_instance/ns:card_status', namespace).text,
                 'card_state': card.find('ns:card_instance/ns:card_state', namespace).text,
-                'iss_date': card.find('ns:card_instance/ns:iss_date', namespace).text,
-                'start_date': card.find('ns:card_instance/ns:start_date', namespace).text,
-                'expiration_date': card.find('ns:card_instance/ns:expiration_date', namespace).text,
-                'pin_update_flag': card.find('ns:card_instance/ns:pin_update_flag', namespace).text,
-                'pin_request': card.find('ns:card_instance/ns:pin_request', namespace).text,
-                'perso_priority': card.find('ns:card_instance/ns:perso_priority', namespace).text,
-                'embossing_request': card.find('ns:card_instance/ns:embossing_request', namespace).text,
-                'pin_mailer_request': card.find('ns:card_instance/ns:pin_mailer_request', namespace).text
+                'iss_date': card.find('ns:card_instance/ns:iss_date', namespace).text if card.find('ns:card_instance/ns:iss_date', namespace) is not None else None,
+                'start_date': card.find('ns:card_instance/ns:start_date', namespace).text if card.find('ns:card_instance/ns:start_date', namespace) is not None else None,
+                'expiration_date': card.find('ns:card_instance/ns:expiration_date', namespace).text if card.find('ns:card_instance/ns:expiration_date', namespace) is not None else None,
+                'pin_update_flag': card.find('ns:card_instance/ns:pin_update_flag', namespace).text if card.find('ns:card_instance/ns:pin_update_flag', namespace) is not None else None,
+                'pin_request': card.find('ns:card_instance/ns:pin_request', namespace).text if card.find('ns:card_instance/ns:pin_request', namespace) is not None else None,
+                'perso_priority': card.find('ns:card_instance/ns:perso_priority', namespace).text if card.find('ns:card_instance/ns:perso_priority', namespace) is not None else None,
+                'embossing_request': card.find('ns:card_instance/ns:embossing_request', namespace).text if card.find('ns:card_instance/ns:embossing_request', namespace) is not None else None,
+                'pin_mailer_request': card.find('ns:card_instance/ns:pin_mailer_request', namespace).text if card.find('ns:card_instance/ns:pin_mailer_request', namespace) is not None else None
             },
             'account': {
                 'account_id': card.find('ns:account', namespace).get('account_id'),
