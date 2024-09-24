@@ -176,7 +176,7 @@ def insert_cards(cards):
                     card['cardholder']['address']['address_id'],
                     card['cardholder']['address']['address_type'],
                     card['cardholder']['address']['country'],
-                    card['cardholder']['address']['region'],
+                    card['cardholder']['address']['region'] if card['cardholder']['address']['region'] is not None else 'default_region',  # Provide a default value
                     card['cardholder']['address']['city'],
                     card['cardholder']['address']['street'],
                     card['cardholder']['address']['house'],
