@@ -89,8 +89,8 @@ def parse_xml(file_path):
             flexible_data_item = {
                 'field_name': flexible_data.find('ns:field_name', namespace).text,
                 'field_value': flexible_data.find('ns:field_value', namespace).text
-            }
-            card_data['flexible_data'].append(flexible_data_item)
+            }           
+ card_data['flexible_data'].append(flexible_data_item)
 
         cards.append(card_data)
 
@@ -186,7 +186,7 @@ def insert_cards(cards):
                 print(f"Inserted address record {i} of {total_records}")
 
             # Insert cardholder data
-            if card['cardholder']['person']['person_id'] is not None:
+            if card['cardholder']['person']['person_id'] is not None and card['cardholder']['address']['address_id'] is not None:
                 insert_cardholder_query = """
                 INSERT INTO cardholders (cardholder_id, card_id, cardholder_number, cardholder_name, person_id, address_id)
                 VALUES (%s, %s, %s, %s, %s, %s)
@@ -201,7 +201,10 @@ def insert_cards(cards):
                 ))
                 print(f"Inserted cardholder record {i} of {total_records}")
             else:
-                print(f"Skipped cardholder record {i} of {total_records} due to missing person_id")
+                if card['cardholder']['person']['person_id'] is None:
+                    print(f"Skipped cardholder record {i} of {total_records} due to missing person_id")
+                if card['cardholder']['address']['address_id'] is None:
+                    print(f"Skipped cardholder record {i} of {total_records} due to missing address_id")
 
             # Insert card instance data
             insert_card_instance_query = """
