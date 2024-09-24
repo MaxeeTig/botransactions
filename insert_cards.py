@@ -184,10 +184,10 @@ def insert_cards(cards):
                             card['cardholder']['address']['address_type'] if card['cardholder']['address']['address_type'] is not None else "ADPTHOME",
                             card['cardholder']['address']['country'],
                             card['cardholder']['address']['region'] if card['cardholder']['address']['region'] is not None else 'default_region',  # Provide a default value
-                            card['cardholder']['address']['city'],
-                            card['cardholder']['address']['street'],
-                            card['cardholder']['address']['house'],
-                            card['cardholder']['address']['postal_code'],
+                            card['cardholder']['address']['city'] if card['cardholder']['address']['city'] is not None else 'NONE',
+                            card['cardholder']['address']['street'] if card['cardholder']['address']['street'] is not None else 'NONE',
+                            card['cardholder']['address']['house'] if card['cardholder']['address']['house'] is not None else 'NONE',
+                            card['cardholder']['address']['postal_code'] if card['cardholder']['address']['postal_code'] is not None else '111111',
                             card['customer']['customer_id']  # Ensure customer_id is included
                         ))
                         print(f"Inserted address record {i} of {total_records}")
@@ -212,7 +212,7 @@ def insert_cards(cards):
                         card['cardholder']['cardholder_id'],
                         card['card_id'],
                         card['cardholder']['cardholder_number'],
-                        card['cardholder']['cardholder_name'],
+                        card['cardholder']['cardholder_name'] if card['cardholder']['cardholder_name'] is not None else 'Default CH name',  # Provide a default value
                         card['cardholder']['person']['person_id'],
                         card['cardholder']['address']['address_id']
                     ))
@@ -237,8 +237,8 @@ def insert_cards(cards):
                 card['card_instance']['agent_id'],
                 card['card_instance']['agent_number'],
                 card['card_instance']['sequential_number'] if card['card_instance']['sequential_number'] is not None else '0',  # Provide a default value,
-                card['card_instance']['card_status'],
-                card['card_instance']['card_state'],
+                card['card_instance']['card_status'] if card['card_instance']['card_status'] is not None else 'CSTS0000',  # Provide a default value
+                card['card_instance']['card_state'] if card['card_instance']['card_state'] is not None else 'CSTE0200',  # Provide a default value
                 card['card_instance']['iss_date'],
                 card['card_instance']['start_date'] if card['card_instance']['start_date'] is not None else '2013-08-03',
                 card['card_instance']['expiration_date'] if card['card_instance']['expiration_date'] is not None else '2025-01-01',
@@ -270,8 +270,8 @@ def insert_cards(cards):
                         card['card_id'],
                         card['account']['account_number'],
                         card['account']['account_type'],
-                        card['account']['currency'],
-                        card['account']['account_status'],
+                        card['account']['currency'] if card['account']['currency'] is not None else '643',  # Provide a default value
+                        card['account']['account_status'] if card['account']['account_status'] is not None else 'ACSTACTV',  # Provide a default value,ACSTACTV
                         card['account']['link_flag']
                     ))
                     print(f"Inserted record {i} of {total_records}")
@@ -289,7 +289,7 @@ def insert_cards(cards):
                 cursor.execute(insert_flexible_data_query, (
                     'Card',
                     flexible_data['field_name'],
-                    flexible_data['field_value']
+                    flexible_data['field_value'] if flexible_data['field_value'] is not None else 'NONE',  # Provide a default value,ACSTACTV
                 ))
                 print(f"Inserted record {i} of {total_records}")
 

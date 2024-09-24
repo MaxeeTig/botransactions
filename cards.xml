@@ -204,4 +204,127 @@
             <field_value>2211</field_value>
         </flexible_data>
     </card>
+	
+	<card card_id="100000005457">
+	<inst_id>1001</inst_id>
+	<card_number>333333******2390</card_number>
+	<card_mask>333333******2390</card_mask>
+	<card_type>7010</card_type>
+	<country>643</country>
+	<category>CRCG0200</category>
+	<reg_date>2016-01-16</reg_date>
+	<customer customer_id="100000004451">
+		<customer_number>125</customer_number>
+	</customer>
+	<contract contract_id="100000005344">
+		<contract_number>00000000000000000000100000005344</contract_number>
+	</contract>
+	<cardholder cardholder_id="4522">
+		<cardholder_number>00000000000000000000000000004522</cardholder_number>
+		<cardholder_name>INSTANT ISSUE</cardholder_name>
+		<person person_id="700000000345">
+			<person_name language="LANGRUS">
+				<surname>Issue</surname>
+				<first_name>Instant</first_name>
+			</person_name>
+			<identity_card>
+				<id_type>IDTP0001</id_type>
+				<id_series>00 00</id_series>
+				<id_number>000000</id_number>
+			</identity_card>
+		</person>
+		<address address_id="700000000418">
+			<address_type>ADTPBSNA</address_type>
+			<country>643</country>
+			<address_name language="LANGRUS">
+				<region>РТ</region>
+				<city>Казань</city>
+				<street>Мусы Джалиля</street>
+			</address_name>
+			<house>3</house>
+			<postal_code>101000</postal_code>
+		</address>
+	</cardholder>
+	<card_instance instance_id="100000005381">
+		<inst_id>1001</inst_id>
+		<agent_id>70000002</agent_id>
+		<agent_number>079</agent_number>
+		<sequential_number>1</sequential_number>
+		<card_status>CSTS0018</card_status>
+		<status_reason>CSRS0000</status_reason>
+		<card_state>CSTE0100</card_state>
+		<start_date>2016-01-16</start_date>
+		<expiration_date>2018-01-31</expiration_date>
+		<pin_update_flag>0</pin_update_flag>
+		<pin_request>PNRQDONT</pin_request>
+		<perso_priority>PRSP0500</perso_priority>
+		<embossing_request>EMRQEMBS</embossing_request>
+		<pin_mailer_request>PMRQDONT</pin_mailer_request>
+	</card_instance>
+	<account account_id="700000012280">
+		<account_number>333333333</account_number>
+		<account_type>ACTP0120</account_type>
+		<currency>643</currency>
+		<account_status>ACSTACTV</account_status>
+		<is_pos_default>0</is_pos_default>
+		<is_atm_default>0</is_atm_default>
+		<link_flag>1</link_flag>
+	</account>
+</card>
+	
+<card card_id="100000004109">
+	<inst_id>1001</inst_id>
+	<card_number>467771******4001</card_number>
+	<card_mask>467771******4001</card_mask>
+	<card_type>1010</card_type>
+	<country>643</country>
+	<category>CRCG0800</category>
+	<reg_date>2014-08-21</reg_date>
+	<customer customer_id="100000003850">
+		<customer_number>80336</customer_number>
+	</customer>
+	<contract contract_id="100000003847">
+		<contract_number>80036-0001</contract_number>
+	</contract>
+	<cardholder cardholder_id="4034">
+		<cardholder_number>80336</cardholder_number>
+		<cardholder_name>KREDIT CORPORATIVE</cardholder_name>
+		<address address_id="100000003747">
+			<address_type>ADTPHOME</address_type>
+			<country>643</country>
+			<address_name language="LANGRUS">
+				<region></region>
+				<city>NONE</city>
+				<street>420078, Татарстан Респ, г.Казань, ул Желе, кв.1</street>
+			</address_name>
+			<house>NONE</house>
+			<apartment>NONE</apartment>
+		</address>
+	</cardholder>
+	<card_instance instance_id="100000004042">
+		<inst_id>1001</inst_id>
+		<agent_id>70000003</agent_id>
+		<agent_number>09</agent_number>
+		<sequential_number>0</sequential_number>
+		<card_status>CSTS0000</card_status>
+		<status_reason>EVNT0164</status_reason>
+		<card_state>CSTE0200</card_state>
+		<iss_date>2014-08-21</iss_date>
+		<start_date>2014-08-21</start_date>
+		<expiration_date>2016-08-31</expiration_date>
+		<pin_update_flag>0</pin_update_flag>
+		<pin_request>PNRQDONT</pin_request>
+		<perso_priority>PRSP0500</perso_priority>
+		<embossing_request>EMRQDONT</embossing_request>
+		<pin_mailer_request>PMRQDONT</pin_mailer_request>
+	</card_instance>
+	<account account_id="700000010899">
+		<account_number>40817810300000004603</account_number>
+		<account_type>ACTP0120</account_type>
+		<currency>643</currency>
+		<account_status>ACSTACTV</account_status>
+		<link_flag>1</link_flag>
+	</account>
+</card>	
+	
 </cards>
