@@ -21,7 +21,7 @@ def parse_xml(file_path):
             'card_id': card.get('card_id'),
             'inst_id': card.find('ns:inst_id', namespace).text if card.find('ns:inst_id', namespace) is not None else None,
             'card_number': card.find('ns:card_number', namespace).text if card.find('ns:card_number', namespace) is not None else None,
-            'card_mask': card.find('ns:card_mask', namespace).text if card.find('ns:card_mask', namespace) is not None else 'default_mask',  # Provide a default value
+            'card_mask': card.find('ns:card_mask', namespace).text if card.find('ns:card_mask', namespace) is not None else card.find('ns:card_number', namespace).text,  # Provide a default value
             'card_type': card.find('ns:card_type', namespace).text if card.find('ns:card_type', namespace) is not None else None,
             'country': card.find('ns:country', namespace).text if card.find('ns:country', namespace) is not None else None,
             'category': card.find('ns:category', namespace).text if card.find('ns:category', namespace) is not None else None,
