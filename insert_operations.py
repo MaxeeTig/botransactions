@@ -115,6 +115,10 @@ def insert_operations(operations):
 
         total_records = len(operations)
         for i, operation in enumerate(operations, 1):
+            if operation['issuer']['card_id'] is None:
+                print(f"Skipping record {i} of {total_records} due to empty card_id")
+                continue
+
             print(f"Inserting record {i} of {total_records} {operation['oper_id']}")
             # Insert operation data
             insert_operation_query = """
@@ -132,7 +136,7 @@ def insert_operations(operations):
                 operation['oper_amount']['amount_value'],
                 operation['oper_amount']['currency'],
                 operation['originator_refnum'],
-                operation['is_reversal'],
+                operation['is_reversal'] if operation['is_reversal'] is not None else '0',
                 operation['merchant_number'],
                 operation['mcc'],
                 operation['merchant_name'],
@@ -153,14 +157,14 @@ def insert_operations(operations):
             """
             cursor.execute(insert_issuer_query, (
                 operation['oper_id'],
-                operation['issuer']['inst_id'],
-                operation['issuer']['network_id'],
+                operation['issuer']['inst_id'] if operation['issuer']['inst_id'] is not None else '1001',
+                operation['issuer']['network_id'] if operation['issuer']['network_id'] is not None else '1001',
                 operation['issuer']['card_id'],
                 operation['issuer']['card_instance_id'],
-                operation['issuer']['card_seq_number'],
-                operation['issuer']['card_expir_date'],
-                operation['issuer']['card_country'],
-                operation['issuer']['card_network_id'],
+                operation['issuer']['card_seq_number'] if operation['issuer']['card_seq_number'] is not None else '0',
+                operation['issuer']['card_expir_date'] if operation['issuer']['card_expir_date'] is not None else '2025-12-12',
+                operation['issuer']['card_country'] if operation['issuer']['card_country'] is not None else '643',
+                operation['issuer']['card_network_id'] if operation['issuer']['card_network_id'] is not None else '1001',
                 operation['issuer']['auth_code']
             ))
             print(f"Inserted record {i} of {total_records}")
