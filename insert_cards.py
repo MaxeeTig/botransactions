@@ -168,23 +168,26 @@ def insert_cards(cards):
             address_exists = cursor.fetchone()
 
             if not address_exists:
-                # Insert address data
-                insert_address_query = """
-                INSERT INTO addresses (address_id, address_type, country, region, city, street, house, postal_code, customer_id)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
-                """
-                cursor.execute(insert_address_query, (
-                    card['cardholder']['address']['address_id'],
-                    card['cardholder']['address']['address_type'],
-                    card['cardholder']['address']['country'],
-                    card['cardholder']['address']['region'] if card['cardholder']['address']['region'] is not None else 'default_region',  # Provide a default value
-                    card['cardholder']['address']['city'],
-                    card['cardholder']['address']['street'],
-                    card['cardholder']['address']['house'],
-                    card['cardholder']['address']['postal_code'],
-                    card['customer']['customer_id']  # Ensure customer_id is included
-                ))
-                print(f"Inserted address record {i} of {total_records}")
+                if card['cardholder']['address']['address_id'] is not None:
+                    # Insert address data
+                    insert_address_query = """
+                    INSERT INTO addresses (address_id, address_type, country, region, city, street, house, postal_code, customer_id)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    """
+                    cursor.execute(insert_address_query, (
+                        card['cardholder']['address']['address_id'],
+                        card['cardholder']['address']['address_type'],
+                        card['cardholder']['address']['country'],
+                        card['cardholder']['address']['region'] if card['cardholder']['address']['region'] is not None else 'default_region',  # Provide a default value
+                        card['cardholder']['address']['city'],
+                        card['cardholder']['address']['street'],
+                        card['cardholder']['address']['house'],
+                        card['cardholder']['address']['postal_code'],
+                        card['customer']['customer_id']  # Ensure customer_id is included
+                    ))
+                    print(f"Inserted address record {i} of {total_records}")
+                else:
+                    print(f"Skipped address record {i} of {total_records} due to missing address_id")
 
             # Insert cardholder data
             if card['cardholder']['person']['person_id'] is not None and card['cardholder']['address']['address_id'] is not None:
