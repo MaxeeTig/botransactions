@@ -176,7 +176,7 @@ def insert_cards(cards):
                     """
                     cursor.execute(insert_address_query, (
                         card['cardholder']['address']['address_id'],
-                        card['cardholder']['address']['address_type'],
+                        card['cardholder']['address']['address_type'] if card['cardholder']['address']['address_type'] is not None else "ADPTHOME",
                         card['cardholder']['address']['country'],
                         card['cardholder']['address']['region'] if card['cardholder']['address']['region'] is not None else 'default_region',  # Provide a default value
                         card['cardholder']['address']['city'],
@@ -231,12 +231,12 @@ def insert_cards(cards):
                 card['card_instance']['inst_id'],
                 card['card_instance']['agent_id'],
                 card['card_instance']['agent_number'],
-                card['card_instance']['sequential_number'],
+                card['card_instance']['sequential_number'] if card['card_instance']['sequential_number'] is not None else '0',  # Provide a default value,
                 card['card_instance']['card_status'],
                 card['card_instance']['card_state'],
                 card['card_instance']['iss_date'],
-                card['card_instance']['start_date'],
-                card['card_instance']['expiration_date'],
+                card['card_instance']['start_date'] if card['card_instance']['start_date'] is not None else '2013-08-03',
+                card['card_instance']['expiration_date'] if card['card_instance']['expiration_date'] is not None else '2025-01-01',
                 card['card_instance']['pin_update_flag'],
                 card['card_instance']['pin_request'],
                 card['card_instance']['perso_priority'],
