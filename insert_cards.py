@@ -34,15 +34,15 @@ def parse_xml(file_path):
             },
             'cardholder': {
                 'cardholder_id': card.find('ns:cardholder', namespace).get('cardholder_id'),
-                'cardholder_number': card.find('ns:cardholder/ns:cardholder_number', namespace).text,
-                'cardholder_name': card.find('ns:cardholder/ns:cardholder_name', namespace).text,
+                'cardholder_number': card.find('ns:cardholder/ns:cardholder_number', namespace).text if card.find('ns:cardholder/ns:cardholder_number', namespace) is not None else None,
+                'cardholder_name': card.find('ns:cardholder/ns:cardholder_name', namespace).text if card.find('ns:cardholder/ns:cardholder_name', namespace) is not None else None,
                 'person': {
                     'person_id': card.find('ns:cardholder/ns:person', namespace).get('person_id') if card.find('ns:cardholder/ns:person', namespace) is not None else None,
-                    'surname': card.find('ns:cardholder/ns:person/ns:person_name/ns:surname', namespace).text if card.find('ns:cardholder/ns:person', namespace) is not None else None,
-                    'first_name': card.find('ns:cardholder/ns:person/ns:person_name/ns:first_name', namespace).text if card.find('ns:cardholder/ns:person', namespace) is not None else None,
+                    'surname': card.find('ns:cardholder/ns:person/ns:person_name/ns:surname', namespace).text if card.find('ns:cardholder/ns:person/ns:person_name/ns:surname', namespace) is not None else None,
+                    'first_name': card.find('ns:cardholder/ns:person/ns:person_name/ns:first_name', namespace).text if card.find('ns:cardholder/ns:person/ns:person_name/ns:first_name', namespace) is not None else None,
                     'identity_card': {
-                        'id_type': card.find('ns:cardholder/ns:person/ns:identity_card/ns:id_type', namespace).text if card.find('ns:cardholder/ns:person', namespace) is not None else None,
-                        'id_series': card.find('ns:cardholder/ns:person/ns:identity_card/ns:id_series', namespace).text if card.find('ns:cardholder/ns:person', namespace) is not None else None,
+                        'id_type': card.find('ns:cardholder/ns:person/ns:identity_card/ns:id_type', namespace).text if card.find('ns:cardholder/ns:person/ns:identity_card/ns:id_type', namespace) is not None else None,
+                        'id_series': card.find('ns:cardholder/ns:person/ns:identity_card/ns:id_series', namespace).text if card.find('ns:cardholder/ns:person/ns:identity_card/ns:id_series', namespace) is not None else None,
                         'id_number': card.find('ns:cardholder/ns:person/ns:identity_card/ns:id_number', namespace).text if card.find('ns:cardholder/ns:person', namespace) is not None else None
                     }
                 },
@@ -54,7 +54,7 @@ def parse_xml(file_path):
                     'city': card.find('ns:cardholder/ns:address/ns:address_name/ns:city', namespace).text,
                     'street': card.find('ns:cardholder/ns:address/ns:address_name/ns:street', namespace).text,
                     'house': card.find('ns:cardholder/ns:address/ns:house', namespace).text,
-                    'apartment': card.find('ns:cardholder/ns:address/ns:apartment', namespace).text,
+                    'apartment': card.find('ns:cardholder/ns:address/ns:apartment', namespace).text if card.find('ns:cardholder/ns:address/ns:apartment', namespace) is not None else None,
                     'postal_code': card.find('ns:cardholder/ns:address/ns:postal_code', namespace).text if card.find('ns:cardholder/ns:address/ns:postal_code', namespace) is not None else None
                 }
             },
