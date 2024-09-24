@@ -49,7 +49,7 @@ def parse_xml(file_path):
                 'card_instance_id': operation.find('ns:issuer/ns:card_instance_id', namespace).text if operation.find('ns:issuer/ns:card_instance_id', namespace) is not None else None,
                 'card_seq_number': operation.find('ns:issuer/ns:card_seq_number', namespace).text if operation.find('ns:issuer/ns:card_seq_number', namespace) is not None else None,
                 'card_expir_date': operation.find('ns:issuer/ns:card_expir_date', namespace).text,
-                'card_country': operation.find('ns:issuer/ns:card_country', namespace).text,
+                'card_country': operation.find('ns:issuer/ns:card_country', namespace).text if operation.find('ns:issuer/ns:card_country', namespace) is not None else None,
                 'card_network_id': operation.find('ns:issuer/ns:card_network_id', namespace).text,
                 'auth_code': operation.find('ns:issuer/ns:auth_code', namespace).text if operation.find('ns:issuer/ns:auth_code', namespace) is not None else None
             },
