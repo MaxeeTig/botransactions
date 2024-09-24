@@ -39,5 +39,6 @@ CREATE TABLE addresses (
     city VARCHAR(255) NOT NULL,
     street VARCHAR(255) NOT NULL,
     house VARCHAR(255) NOT NULL,
+    postal_code VARCHAR(255),
     FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
 );
