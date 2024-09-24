@@ -115,7 +115,7 @@ def insert_operations(operations):
 
         total_records = len(operations)
         for i, operation in enumerate(operations, 1):
-            print(f"Inserting record {i} of {total_records}")
+            print(f"Inserting record {i} of {total_records} {operation['oper_id']}")
             # Insert operation data
             insert_operation_query = """
             INSERT INTO operations (oper_id, oper_type, msg_type, sttl_type, status, oper_date, host_date, amount_value, currency, originator_refnum, is_reversal, merchant_number, mcc, merchant_name, merchant_street, merchant_city, merchant_region, merchant_country, merchant_postcode, terminal_type, terminal_number)
