@@ -161,19 +161,22 @@ def insert_cards(cards):
                     print(f"Inserted person record {i} of {total_records}")
 
             # Insert cardholder data
-            insert_cardholder_query = """
-            INSERT INTO cardholders (cardholder_id, card_id, cardholder_number, cardholder_name, person_id, address_id)
-            VALUES (%s, %s, %s, %s, %s, %s)
-            """
-            cursor.execute(insert_cardholder_query, (
-                card['cardholder']['cardholder_id'],
-                card['card_id'],
-                card['cardholder']['cardholder_number'],
-                card['cardholder']['cardholder_name'],
-                card['cardholder']['person']['person_id'],
-                card['cardholder']['address']['address_id']
-            ))
-            print(f"Inserted cardholder record {i} of {total_records}")
+            if card['cardholder']['person']['person_id'] is not None:
+                insert_cardholder_query = """
+                INSERT INTO cardholders (cardholder_id, card_id, cardholder_number, cardholder_name, person_id, address_id)
+                VALUES (%s, %s, %s, %s, %s, %s)
+                """
+                cursor.execute(insert_cardholder_query, (
+                    card['cardholder']['cardholder_id'],
+                    card['card_id'],
+                    card['cardholder']['cardholder_number'],
+                    card['cardholder']['cardholder_name'],
+                    card['cardholder']['person']['person_id'],
+                    card['cardholder']['address']['address_id']
+                ))
+                print(f"Inserted cardholder record {i} of {total_records}")
+            else:
+                print(f"Skipped cardholder record {i} of {total_records} due to missing person_id")
 
             # Insert address data
             insert_address_query = """
