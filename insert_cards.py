@@ -54,7 +54,6 @@ def parse_xml(file_path):
                     'city': card.find('ns:cardholder/ns:address/ns:address_name/ns:city', namespace).text if card.find('ns:cardholder/ns:address/ns:address_name/ns:city', namespace) is not None else None,
                     'street': card.find('ns:cardholder/ns:address/ns:address_name/ns:street', namespace).text if card.find('ns:cardholder/ns:address/ns:address_name/ns:street', namespace) is not None else None,
                     'house': card.find('ns:cardholder/ns:address/ns:house', namespace).text if card.find('ns:cardholder/ns:address/ns:house', namespace) is not None else None,
-                    'apartment': card.find('ns:cardholder/ns:address/ns:apartment', namespace).text if card.find('ns:cardholder/ns:address/ns:apartment', namespace) is not None else None,
                     'postal_code': card.find('ns:cardholder/ns:address/ns:postal_code', namespace).text if card.find('ns:cardholder/ns:address/ns:postal_code', namespace) is not None else None
                 }
             },
@@ -180,8 +179,8 @@ def insert_cards(cards):
 
             # Insert address data
             insert_address_query = """
-            INSERT INTO addresses (address_id, address_type, country, region, city, street, house, apartment, postal_code)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
+            INSERT INTO addresses (address_id, address_type, country, region, city, street, house, postal_code)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
             """
             cursor.execute(insert_address_query, (
                 card['cardholder']['address']['address_id'],
@@ -191,7 +190,6 @@ def insert_cards(cards):
                 card['cardholder']['address']['city'],
                 card['cardholder']['address']['street'],
                 card['cardholder']['address']['house'],
-                card['cardholder']['address']['apartment'],
                 card['cardholder']['address']['postal_code']
             ))
             print(f"Inserted record {i} of {total_records}")
