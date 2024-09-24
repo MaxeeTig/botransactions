@@ -125,30 +125,37 @@ def insert_operations(operations):
             INSERT INTO operations (oper_id, oper_type, msg_type, sttl_type, status, oper_date, host_date, amount_value, currency, originator_refnum, is_reversal, merchant_number, mcc, merchant_name, merchant_street, merchant_city, merchant_region, merchant_country, merchant_postcode, terminal_type, terminal_number)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """
-            cursor.execute(insert_operation_query, (
-                operation['oper_id'],
-                operation['oper_type'],
-                operation['msg_type'],
-                operation['sttl_type'],
-                operation['status'],
-                operation['oper_date'],
-                operation['host_date'],
-                operation['oper_amount']['amount_value'],
-                operation['oper_amount']['currency'],
-                operation['originator_refnum'],
-                operation['is_reversal'] if operation['is_reversal'] is not None else '0',
-                operation['merchant_number'],
-                operation['mcc'],
-                operation['merchant_name'],
-                operation['merchant_street'],
-                operation['merchant_city'],
-                operation['merchant_region'],
-                operation['merchant_country'],
-                operation['merchant_postcode'],
-                operation['terminal_type'],
-                operation['terminal_number']
-            ))
-            print(f"Inserted record {i} of {total_records}")
+            check_duplicate_query = """
+            SELECT oper_id FROM operations WHERE oper_id = %s
+            """
+            cursor.execute(check_duplicate_query, (operation['oper_id'],))
+            if cursor.fetchone() is None:
+                cursor.execute(insert_operation_query, (
+                    operation['oper_id'],
+                    operation['oper_type'],
+                    operation['msg_type'],
+                    operation['sttl_type'],
+                    operation['status'],
+                    operation['oper_date'],
+                    operation['host_date'],
+                    operation['oper_amount']['amount_value'],
+                    operation['oper_amount']['currency'],
+                    operation['originator_refnum'],
+                    operation['is_reversal'] if operation['is_reversal'] is not None else '0',
+                    operation['merchant_number'],
+                    operation['mcc'],
+                    operation['merchant_name'],
+                    operation['merchant_street'],
+                    operation['merchant_city'],
+                    operation['merchant_region'],
+                    operation['merchant_country'],
+                    operation['merchant_postcode'],
+                    operation['terminal_type'],
+                    operation['terminal_number']
+                ))
+                print(f"Inserted record {i} of {total_records}")
+            else:
+                print(f"Skipping record {i} of {total_records} due to duplicate oper_id: {operation['oper_id']}")
 
             # Insert issuer data
             insert_issuer_query = """
