@@ -145,20 +145,24 @@ def insert_cards(cards):
                 person_exists = cursor.fetchone()
 
                 if not person_exists:
-                    # Insert person data
-                    insert_person_query = """
-                    INSERT INTO persons (person_id, surname, first_name, id_type, id_series, id_number)
-                    VALUES (%s, %s, %s, %s, %s, %s)
-                    """
-                    cursor.execute(insert_person_query, (
-                        card['cardholder']['person']['person_id'],
-                        card['cardholder']['person']['surname'],
-                        card['cardholder']['person']['first_name'],
-                        card['cardholder']['person']['identity_card']['id_type'],
-                        card['cardholder']['person']['identity_card']['id_series'],
-                        card['cardholder']['person']['identity_card']['id_number']
-                    ))
-                    print(f"Inserted person record {i} of {total_records}")
+                    if card['customer']['customer_id'] is not None:
+                        # Insert person data
+                        insert_person_query = """
+                        INSERT INTO persons (person_id, surname, first_name, id_type, id_series, id_number, customer_id)
+                        VALUES (%s, %s, %s, %s, %s, %s, %s)
+                        """
+                        cursor.execute(insert_person_query, (
+                            card['cardholder']['person']['person_id'],
+                            card['cardholder']['person']['surname'],
+                            card['cardholder']['person']['first_name'],
+                            card['cardholder']['person']['identity_card']['id_type'],
+                            card['cardholder']['person']['identity_card']['id_series'],
+                            card['cardholder']['person']['identity_card']['id_number'],
+                            card['customer']['customer_id']  # Ensure customer_id is included
+                        ))
+                        print(f"Inserted person record {i} of {total_records}")
+                    else:
+                        print(f"Skipped person record {i} of {total_records} due to missing customer_id")
 
             # Check if address_id exists
             check_address_query = """
