@@ -76,12 +76,12 @@ def parse_xml(file_path):
                 'pin_mailer_request': card.find('ns:card_instance/ns:pin_mailer_request', namespace).text if card.find('ns:card_instance/ns:pin_mailer_request', namespace) is not None else None
             },
             'account': {
-                'account_id': card.find('ns:account', namespace).get('account_id'),
-                'account_number': card.find('ns:account/ns:account_number', namespace).text,
-                'account_type': card.find('ns:account/ns:account_type', namespace).text,
-                'currency': card.find('ns:account/ns:currency', namespace).text,
-                'account_status': card.find('ns:account/ns:account_status', namespace).text,
-                'link_flag': card.find('ns:account/ns:link_flag', namespace).text
+                'account_id': card.find('ns:account', namespace).get('account_id') if card.find('ns:account', namespace) is not None else None,
+                'account_number': card.find('ns:account/ns:account_number', namespace).text if card.find('ns:account/ns:account_number', namespace) is not None else None,
+                'account_type': card.find('ns:account/ns:account_type', namespace).text if card.find('ns:account/ns:account_type', namespace) is not None else None,
+                'currency': card.find('ns:account/ns:currency', namespace).text if card.find('ns:account/ns:currency', namespace) is not None else None,
+                'account_status': card.find('ns:account/ns:account_status', namespace).text if card.find('ns:account/ns:account_status', namespace) is not None else None,
+                'link_flag': card.find('ns:account/ns:link_flag', namespace).text if card.find('ns:account/ns:link_flag', namespace) is not None else None
             },
             'flexible_data': []
         }
