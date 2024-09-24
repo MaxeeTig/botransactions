@@ -228,21 +228,25 @@ def insert_cards(cards):
             ))
             print(f"Inserted record {i} of {total_records}")
 
-            # Insert account data
-            insert_account_query = """
-            INSERT INTO accounts (account_id, card_id, account_number, account_type, currency, account_status, link_flag)
-            VALUES (%s, %s, %s, %s, %s, %s, %s)
-            """
-            cursor.execute(insert_account_query, (
-                card['account']['account_id'],
-                card['card_id'],
-                card['account']['account_number'],
-                card['account']['account_type'],
-                card['account']['currency'],
-                card['account']['account_status'],
-                card['account']['link_flag']
-            ))
-            print(f"Inserted record {i} of {total_records}")
+            # Check if account_id exists
+            if card['account']['account_id'] is not None:
+                # Insert account data
+                insert_account_query = """
+                INSERT INTO accounts (account_id, card_id, account_number, account_type, currency, account_status, link_flag)
+                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                """
+                cursor.execute(insert_account_query, (
+                    card['account']['account_id'],
+                    card['card_id'],
+                    card['account']['account_number'],
+                    card['account']['account_type'],
+                    card['account']['currency'],
+                    card['account']['account_status'],
+                    card['account']['link_flag']
+                ))
+                print(f"Inserted record {i} of {total_records}")
+            else:
+                print(f"Skipped account record {i} of {total_records} due to missing account_id")
 
             # Insert flexible data
             for flexible_data in card['flexible_data']:
