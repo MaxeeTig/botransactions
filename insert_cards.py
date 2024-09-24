@@ -37,13 +37,13 @@ def parse_xml(file_path):
                 'cardholder_number': card.find('ns:cardholder/ns:cardholder_number', namespace).text,
                 'cardholder_name': card.find('ns:cardholder/ns:cardholder_name', namespace).text,
                 'person': {
-                    'person_id': card.find('ns:cardholder/ns:person', namespace).get('person_id'),
-                    'surname': card.find('ns:cardholder/ns:person/ns:person_name/ns:surname', namespace).text,
-                    'first_name': card.find('ns:cardholder/ns:person/ns:person_name/ns:first_name', namespace).text,
+                    'person_id': card.find('ns:cardholder/ns:person', namespace).get('person_id') if card.find('ns:cardholder/ns:person', namespace) is not None else None,
+                    'surname': card.find('ns:cardholder/ns:person/ns:person_name/ns:surname', namespace).text if card.find('ns:cardholder/ns:person', namespace) is not None else None,
+                    'first_name': card.find('ns:cardholder/ns:person/ns:person_name/ns:first_name', namespace).text if card.find('ns:cardholder/ns:person', namespace) is not None else None,
                     'identity_card': {
-                        'id_type': card.find('ns:cardholder/ns:person/ns:identity_card/ns:id_type', namespace).text,
-                        'id_series': card.find('ns:cardholder/ns:person/ns:identity_card/ns:id_series', namespace).text,
-                        'id_number': card.find('ns:cardholder/ns:person/ns:identity_card/ns:id_number', namespace).text
+                        'id_type': card.find('ns:cardholder/ns:person/ns:identity_card/ns:id_type', namespace).text if card.find('ns:cardholder/ns:person', namespace) is not None else None,
+                        'id_series': card.find('ns:cardholder/ns:person/ns:identity_card/ns:id_series', namespace).text if card.find('ns:cardholder/ns:person', namespace) is not None else None,
+                        'id_number': card.find('ns:cardholder/ns:person/ns:identity_card/ns:id_number', namespace).text if card.find('ns:cardholder/ns:person', namespace) is not None else None
                     }
                 },
                 'address': {
@@ -100,7 +100,7 @@ def parse_xml(file_path):
 def insert_cards(cards):
     try:
         conn = mysql.connector.connect(**db_config)
-        
+
     except mysql.connector.Error as err:
         if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
             print("Something is wrong with your user name or password")
@@ -263,7 +263,6 @@ def insert_cards(cards):
         conn.commit()
         cursor.close()
         conn.close()
-
 
 import sys
 
