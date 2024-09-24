@@ -89,8 +89,8 @@ def parse_xml(file_path):
             flexible_data_item = {
                 'field_name': flexible_data.find('ns:field_name', namespace).text,
                 'field_value': flexible_data.find('ns:field_value', namespace).text
-            }           
- card_data['flexible_data'].append(flexible_data_item)
+            }
+            card_data['flexible_data'].append(flexible_data_item)
 
         cards.append(card_data)
 
