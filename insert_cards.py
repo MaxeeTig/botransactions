@@ -19,13 +19,13 @@ def parse_xml(file_path):
     for card in root.findall('ns:card', namespace):
         card_data = {
             'card_id': card.get('card_id'),
-            'inst_id': card.find('ns:inst_id', namespace).text,
-            'card_number': card.find('ns:card_number', namespace).text,
-            'card_mask': card.find('ns:card_mask', namespace).text,
-            'card_type': card.find('ns:card_type', namespace).text,
-            'country': card.find('ns:country', namespace).text,
-            'category': card.find('ns:category', namespace).text,
-            'reg_date': card.find('ns:reg_date', namespace).text,
+            'inst_id': card.find('ns:inst_id', namespace).text if card.find('ns:inst_id', namespace) is not None else None,
+            'card_number': card.find('ns:card_number', namespace).text if card.find('ns:card_number', namespace) is not None else None,
+            'card_mask': card.find('ns:card_mask', namespace).text if card.find('ns:card_mask', namespace) is not None else None,
+            'card_type': card.find('ns:card_type', namespace).text if card.find('ns:card_type', namespace) is not None else None,
+            'country': card.find('ns:country', namespace).text if card.find('ns:country', namespace) is not None else None,
+            'category': card.find('ns:category', namespace).text if card.find('ns:category', namespace) is not None else None,
+            'reg_date': card.find('ns:reg_date', namespace).text if card.find('ns:reg_date', namespace) is not None else None,
             'customer': {
                 'customer_id': card.find('ns:customer', namespace).get('customer_id')
             },
