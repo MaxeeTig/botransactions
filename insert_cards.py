@@ -55,7 +55,7 @@ def parse_xml(file_path):
                     'street': card.find('ns:cardholder/ns:address/ns:address_name/ns:street', namespace).text,
                     'house': card.find('ns:cardholder/ns:address/ns:house', namespace).text,
                     'apartment': card.find('ns:cardholder/ns:address/ns:apartment', namespace).text,
-                    'postal_code': card.find('ns:cardholder/ns:address/ns:postal_code', namespace).text
+                    'postal_code': card.find('ns:cardholder/ns:address/ns:postal_code', namespace).text if card.find('ns:cardholder/ns:address/ns:postal_code', namespace) is not None else None
                 }
             },
             'card_instance': {
