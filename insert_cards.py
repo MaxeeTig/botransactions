@@ -48,10 +48,8 @@ def parse_xml(file_path):
                 },
                 'address': {
                     'address_id': card.find('ns:cardholder/ns:address', namespace).get('address_id') if card.find('ns:cardholder/ns:address', namespace) is not None else None,
-                    'address_type': card.find('ns:cardholder/ns:address/ns:address_type', namespace).text if card.find('ns:cardholder/ns:address/ns:address_type',
-namespace) is not None else None,
-                    'country': card.find('ns:cardholder/ns:address/ns:country', namespace).text if card.find('ns:cardholder/ns:address/ns:country', namespace) is 
-not None else None,
+                    'address_type': card.find('ns:cardholder/ns:address/ns:address_type', namespace).text if card.find('ns:cardholder/ns:address/ns:address_type', namespace) is not None else None,
+                    'country': card.find('ns:cardholder/ns:address/ns:country', namespace).text if card.find('ns:cardholder/ns:address/ns:country', namespace) is not None else None,
                     'region': card.find('ns:cardholder/ns:address/ns:address_name/ns:region', namespace).text if card.find('ns:cardholder/ns:address/ns:address_name/ns:region', namespace) is not None else None,
                     'city': card.find('ns:cardholder/ns:address/ns:address_name/ns:city', namespace).text if card.find('ns:cardholder/ns:address/ns:address_name/ns:city', namespace) is not None else None,
                     'street': card.find('ns:cardholder/ns:address/ns:address_name/ns:street', namespace).text if card.find('ns:cardholder/ns:address/ns:address_name/ns:street', namespace) is not None else None,
