@@ -47,7 +47,7 @@ def parse_xml(file_path):
                 'network_id': operation.find('ns:issuer/ns:network_id', namespace).text,
                 'card_id': operation.find('ns:issuer/ns:card_id', namespace).text if operation.find('ns:issuer/ns:card_id', namespace) is not None else None,
                 'card_instance_id': operation.find('ns:issuer/ns:card_instance_id', namespace).text if operation.find('ns:issuer/ns:card_instance_id', namespace) is not None else None,
-                'card_seq_number': operation.find('ns:issuer/ns:card_seq_number', namespace).text,
+                'card_seq_number': operation.find('ns:issuer/ns:card_seq_number', namespace).text if operation.find('ns:issuer/ns:card_seq_number', namespace) is not None else None,
                 'card_expir_date': operation.find('ns:issuer/ns:card_expir_date', namespace).text,
                 'card_country': operation.find('ns:issuer/ns:card_country', namespace).text,
                 'card_network_id': operation.find('ns:issuer/ns:card_network_id', namespace).text,
