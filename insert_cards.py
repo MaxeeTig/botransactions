@@ -247,21 +247,31 @@ def insert_cards(cards):
 
             # Check if account_id exists
             if card['account']['account_id'] is not None:
-                # Insert account data
-                insert_account_query = """
-                INSERT INTO accounts (account_id, card_id, account_number, account_type, currency, account_status, link_flag)
-                VALUES (%s, %s, %s, %s, %s, %s, %s)
+                # Check if account_id exists in accounts table
+                check_account_query = """
+                SELECT account_id FROM accounts WHERE account_id = %s
                 """
-                cursor.execute(insert_account_query, (
-                    card['account']['account_id'],
-                    card['card_id'],
-                    card['account']['account_number'],
-                    card['account']['account_type'],
-                    card['account']['currency'],
-                    card['account']['account_status'],
-                    card['account']['link_flag']
-                ))
-                print(f"Inserted record {i} of {total_records}")
+                cursor.execute(check_account_query, (card['account']['account_id'],))
+                account_exists = cursor.fetchone()
+
+                if not account_exists:
+                    # Insert account data
+                    insert_account_query = """
+                    INSERT INTO accounts (account_id, card_id, account_number, account_type, currency, account_status, link_flag)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s)
+                    """
+                    cursor.execute(insert_account_query, (
+                        card['account']['account_id'],
+                        card['card_id'],
+                        card['account']['account_number'],
+                        card['account']['account_type'],
+                        card['account']['currency'],
+                        card['account']['account_status'],
+                        card['account']['link_flag']
+                    ))
+                    print(f"Inserted record {i} of {total_records}")
+                else:
+                    print(f"Skipped account record {i} of {total_records} due to duplicate account_id")
             else:
                 print(f"Skipped account record {i} of {total_records} due to missing account_id")
 
