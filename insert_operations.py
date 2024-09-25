@@ -1,3 +1,4 @@
+import sys
 import xml.etree.ElementTree as ET
 import mysql.connector
 from mysql.connector import errorcode
@@ -12,90 +13,25 @@ db_config = {
 
 
 def parse_xml(file_path):
-    tree = ET.parse(file_path)
-    root = tree.getroot()
-    namespace = {'ns': 'http://sv.bpc.in/SVXP/Operations'}
-    operations = []
+     tree = ET.parse(file_path)
+     root = tree.getroot()
+     namespace = {'ns': 'http://sv.bpc.in/SVXP/Operations'}
+     operations = []
 
-    for operation in root.findall('ns:operation', namespace):
-        operation_data = {
-            'oper_id': operation.find('ns:oper_id', namespace).text,
-            'oper_type': operation.find('ns:oper_type', namespace).text,
-            'msg_type': operation.find('ns:msg_type', namespace).text,
-            'sttl_type': operation.find('ns:sttl_type', namespace).text,
-            'status': operation.find('ns:status', namespace).text,
-            'oper_date': operation.find('ns:oper_date', namespace).text,
-            'host_date': operation.find('ns:host_date', namespace).text,
-            'oper_amount': {
-                'amount_value': operation.find('ns:oper_amount/ns:amount_value', namespace).text,
-                'currency': operation.find('ns:oper_amount/ns:currency', namespace).text
-            },
-            'originator_refnum': operation.find('ns:originator_refnum', namespace).text if operation.find('ns:originator_refnum', namespace) is not None else None,
-            'is_reversal': operation.find('ns:is_reversal', namespace).text if operation.find('ns:is_reversal', namespace) is not None else None,
-            'merchant_number': operation.find('ns:merchant_number', namespace).text if operation.find('ns:merchant_number', namespace) is not None else None,
-            'mcc': operation.find('ns:mcc', namespace).text if operation.find('ns:mcc', namespace) is not None else None,
-            'merchant_name': operation.find('ns:merchant_name', namespace).text if operation.find('ns:merchant_name', namespace) is not None else None,
-            'merchant_street': operation.find('ns:merchant_street', namespace).text if operation.find('ns:merchant_street', namespace) is not None else None,
-            'merchant_city': operation.find('ns:merchant_city', namespace).text if operation.find('ns:merchant_city', namespace) is not None else None,
-            'merchant_region': operation.find('ns:merchant_region', namespace).text if operation.find('ns:merchant_region', namespace) is not None else None,
-            'merchant_country': operation.find('ns:merchant_country', namespace).text if operation.find('ns:merchant_country', namespace) is not None else None,
-            'merchant_postcode': operation.find('ns:merchant_postcode', namespace).text if operation.find('ns:merchant_postcode', namespace) is not None else None,
-            'terminal_type': operation.find('ns:terminal_type', namespace).text if operation.find('ns:terminal_type', namespace) is not None else None,
-            'terminal_number': operation.find('ns:terminal_number', namespace).text if operation.find('ns:terminal_number', namespace) is not None else None,
-            'issuer': {
-                'inst_id': operation.find('ns:issuer/ns:inst_id', namespace).text if operation.find('ns:issuer/ns:inst_id', namespace) is not None else None,
-                'network_id': operation.find('ns:issuer/ns:network_id', namespace).text if operation.find('ns:issuer/ns:network_id', namespace) is not None else None,
-                'card_id': operation.find('ns:issuer/ns:card_id', namespace).text if operation.find('ns:issuer/ns:card_id', namespace) is not None else None,
-                'card_instance_id': operation.find('ns:issuer/ns:card_instance_id', namespace).text if operation.find('ns:issuer/ns:card_instance_id', namespace) is not None else None,
-                'card_seq_number': operation.find('ns:issuer/ns:card_seq_number', namespace).text if operation.find('ns:issuer/ns:card_seq_number', namespace) is not None else None,
-                'card_expir_date': operation.find('ns:issuer/ns:card_expir_date', namespace).text if operation.find('ns:issuer/ns:card_expir_date', namespace) is not None else None,
-                'card_country': operation.find('ns:issuer/ns:card_country', namespace).text if operation.find('ns:issuer/ns:card_country', namespace) is not None else None,
-                'card_network_id': operation.find('ns:issuer/ns:card_network_id', namespace).text if operation.find('ns:issuer/ns:card_network_id', namespace) is not None else None,
-                'auth_code': operation.find('ns:issuer/ns:auth_code', namespace).text if operation.find('ns:issuer/ns:auth_code', namespace) is not None else None
-            },
-            'acquirer': {
-                'inst_id': operation.find('ns:acquirer/ns:inst_id', namespace).text if operation.find('ns:acquirer/ns:inst_id', namespace) is not None else None,
-                'network_id': operation.find('ns:acquirer/ns:network_id', namespace).text if operation.find('ns:acquirer/ns:network_id', namespace) is not None else None,
-                'merchant_id': operation.find('ns:acquirer/ns:merchant_id', namespace).text if operation.find('ns:acquirer/ns:merchant_id', namespace) is not None else None,
-                'terminal_id': operation.find('ns:acquirer/ns:terminal_id', namespace).text if operation.find('ns:acquirer/ns:terminal_id', namespace) is not None else None,
-            },
-            'transactions': []
-        }
+     for operation in root.findall('.//ns:operation', namespace):
+         operation_data = {tag: '' for tag in all_tags}
+         for elem in operation:
+             if len(elem):
+                 for subelem in elem:
+                     tag = f"{elem.tag.replace('{http://sv.bpc.in/SVXP/Operations}','')}_{subelem.tag.replace('{http://sv.bpc.in/SVXP/Operations}', '')}"
+                     operation_data[tag] = subelem.text
+             else:
+                 tag = elem.tag.replace('{http://sv.bpc.in/SVXP/Operations}', '')
+                 operation_data[tag] = elem.text
+         operations.append(operation_data)
 
-        for transaction in operation.findall('ns:transaction', namespace):
-            transaction_data = {
-                'transaction_id': transaction.find('ns:transaction_id', namespace).text,
-                'transaction_type': transaction.find('ns:transaction_type', namespace).text,
-                'posting_date': transaction.find('ns:posting_date', namespace).text,
-                'debit_entry': {
-                    'entry_id': transaction.find('ns:debit_entry/ns:entry_id', namespace).text if transaction.find('ns:debit_entry/ns:entry_id', namespace) is not None else None,
-                    'account': {
-                        'account_number': transaction.find('ns:debit_entry/ns:account/ns:account_number', namespace).text if transaction.find('ns:debit_entry/ns:account/ns:account_number', namespace) is not None else None,
-                        'currency': transaction.find('ns:debit_entry/ns:account/ns:currency', namespace).text if transaction.find('ns:debit_entry/ns:account/ns:currency', namespace) is not None else None
-                    },
-                    'amount': {
-                        'amount_value': transaction.find('ns:debit_entry/ns:amount/ns:amount_value', namespace).text if transaction.find('ns:debit_entry/ns:amount/ns:amount_value', namespace) is not None else None,
-                        'currency': transaction.find('ns:debit_entry/ns:amount/ns:currency', namespace).text if transaction.find('ns:debit_entry/ns:amount/ns:currency', namespace) is not None else None
-                    }
-                },
-                'credit_entry': {
-                    'entry_id': transaction.find('ns:credit_entry/ns:entry_id', namespace).text if transaction.find('ns:credit_entry/ns:entry_id', namespace) is not None else None,
-                    'account': {
-                        'account_number': transaction.find('ns:credit_entry/ns:account/ns:account_number', namespace).text if transaction.find('ns:credit_entry/ns:account/ns:account_number', namespace) is not None else None,
-                        'currency': transaction.find('ns:credit_entry/ns:account/ns:currency', namespace).text if transaction.find('ns:credit_entry/ns:account/ns:currency', namespace) is not None else None
-                    },
-                    'amount': {
-                        'amount_value': transaction.find('ns:credit_entry/ns:amount/ns:amount_value', namespace).text if transaction.find('ns:credit_entry/ns:amount/ns:amount_value', namespace) is not None else None,
-                        'currency': transaction.find('ns:credit_entry/ns:amount/ns:currency', namespace).text if transaction.find('ns:credit_entry/ns:amount/ns:currency', namespace) is not None else None
-                    }
-                },
-                'amount_purpose': transaction.find('ns:amount_purpose', namespace).text if transaction.find('ns:amount_purpose', namespace) is not None else None
-            }
-            operation_data['transactions'].append(transaction_data)
+     return operations
 
-        operations.append(operation_data)
-
-    return operations
 
 def insert_operations(operations):
     try:
@@ -115,15 +51,43 @@ def insert_operations(operations):
 
         total_records = len(operations)
         for i, operation in enumerate(operations, 1):
-            if operation['issuer']['card_id'] is None:
-                print(f"Skipping record {i} of {total_records} due to empty card_id")
+            # here is set of checking for operations parameters to skip
+            if operation['oper)type'] == "OPTP0401":
+                print(f"Skipping record {i} of {total_records} due to OPTP0401")
                 continue
 
             print(f"Inserting record {i} of {total_records} {operation['oper_id']}")
-            # Insert operation data
+            # Insert operation data 5 in line x 20 lines + 1
             insert_operation_query = """
-            INSERT INTO operations (oper_id, oper_type, msg_type, sttl_type, status, oper_date, host_date, amount_value, currency, originator_refnum, is_reversal, merchant_number, mcc, merchant_name, merchant_street, merchant_city, merchant_region, merchant_country, merchant_postcode, terminal_type, terminal_number)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            INSERT INTO operations (
+            acq_inst_bin, acquirer_account_number, acquirer_inst_id, acquirer_merchant_id, acquirer_network_id, 
+            acquirer_terminal_id, auth_data_account_cnvt_rate, auth_data_acq_device_proc_result, auth_data_acq_resp_code, auth_data_addl_data, 
+            auth_data_amounts, auth_data_atc, auth_data_auth_tag, auth_data_auth_transaction_id, auth_data_bin_amount,
+            auth_data_bin_cnvt_rate, auth_data_bin_currency, auth_data_card_capture_cap, auth_data_card_data_input_cap, auth_data_card_data_input_mode,
+            auth_data_card_data_output_cap, auth_data_card_presence, auth_data_cat_level, auth_data_certificate_method, auth_data_crdh_auth_cap,
+            auth_data_crdh_auth_entity, auth_data_crdh_auth_method, auth_data_crdh_presence, auth_data_cvr, auth_data_cvv2_presence,
+            auth_data_cvv2_result, auth_data_device_date, auth_data_emv_data, auth_data_external_auth_id, auth_data_external_orig_id, 
+            auth_data_is_advice, auth_data_is_completed, auth_data_is_early_emv, auth_data_is_repeat, auth_data_network_amount, 
+            auth_data_network_cnvt_date, auth_data_network_currency, auth_data_pin_capture_cap, auth_data_pin_presence, auth_data_pos_cond_code, 
+            auth_data_pos_entry_mode, auth_data_proc_mode, auth_data_proc_type, auth_data_resp_code, auth_data_service_code, 
+            auth_data_terminal_operating_env, auth_data_terminal_output_cap, auth_data_trace_number, auth_data_tvr, auth_data_ucaf_indicator, 
+            host_date, is_reversal, issuer_auth_code, issuer_card_country, issuer_card_expir_date, 
+            issuer_card_id, issuer_card_instance_id, issuer_card_network_id, issuer_card_number, issuer_card_seq_number, 
+            issuer_inst_id, issuer_network_id, mcc, merchant_city, merchant_country, 
+            merchant_name, merchant_number, merchant_postcode, merchant_region, merchant_street, 
+            msg_type, network_refnum, oper_amount_amount_value, oper_amount_currency, oper_date, 
+            oper_id, oper_surcharge_amount_amount_value, oper_surcharge_amount_currency, oper_type, original_id, 
+            originator_refnum, payment_order_id, status, sttl_amount_amount_value, sttl_amount_currency, 
+            sttl_type, terminal_number, terminal_type, transaction_amount_purpose, transaction_conversion_rate,
+            transaction_credit_entry, transaction_debit_entry, transaction_fee, transaction_posting_date, transaction_transaction_id,
+            transaction_transaction_type
+            ) VALUES (
+            %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
+            %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
+            %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
+            %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
+            %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
+            %s)
             """
             check_duplicate_query = """
             SELECT oper_id FROM operations WHERE oper_id = %s
@@ -157,70 +121,12 @@ def insert_operations(operations):
             else:
                 print(f"Skipping record {i} of {total_records} due to duplicate oper_id: {operation['oper_id']}")
 
-            # Insert issuer data
-            insert_issuer_query = """
-            INSERT INTO issuers (oper_id, inst_id, network_id, card_id, card_instance_id, card_seq_number, card_expir_date, card_country, card_network_id, auth_code)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-            """
-            cursor.execute(insert_issuer_query, (
-                operation['oper_id'],
-                operation['issuer']['inst_id'] if operation['issuer']['inst_id'] is not None else '1001',
-                operation['issuer']['network_id'] if operation['issuer']['network_id'] is not None else '1001',
-                operation['issuer']['card_id'],
-                operation['issuer']['card_instance_id'],
-                operation['issuer']['card_seq_number'] if operation['issuer']['card_seq_number'] is not None else '0',
-                operation['issuer']['card_expir_date'] if operation['issuer']['card_expir_date'] is not None else '2025-12-12',
-                operation['issuer']['card_country'] if operation['issuer']['card_country'] is not None else '643',
-                operation['issuer']['card_network_id'] if operation['issuer']['card_network_id'] is not None else '1001',
-                operation['issuer']['auth_code']
-            ))
-            print(f"Inserted record {i} of {total_records}")
-
-            # Insert acquirer data
-            insert_acquirer_query = """
-            INSERT INTO acquirers (oper_id, inst_id, network_id, merchant_id, terminal_id)
-            VALUES (%s, %s, %s, %s, %s)
-            """
-            cursor.execute(insert_acquirer_query, (
-                operation['oper_id'],
-                operation['acquirer']['inst_id'],
-                operation['acquirer']['network_id'],
-                operation['acquirer']['merchant_id'],
-                operation['acquirer']['terminal_id']
-            ))
-            print(f"Inserted record {i} of {total_records}")
-
-            # Insert transaction data
-            for transaction in operation['transactions']:
-                insert_transaction_query = """
-                INSERT INTO transactions (transaction_id, oper_id, transaction_type, posting_date, debit_entry_id, debit_account_number, debit_currency, debit_amount_value, debit_amount_currency, credit_entry_id, credit_account_number, credit_currency, credit_amount_value, credit_amount_currency, amount_purpose)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-                """
-                cursor.execute(insert_transaction_query, (
-                    transaction['transaction_id'],
-                    operation['oper_id'],
-                    transaction['transaction_type'],
-                    transaction['posting_date'],
-                    transaction['debit_entry']['entry_id'],
-                    transaction['debit_entry']['account']['account_number'],
-                    transaction['debit_entry']['account']['currency'],
-                    transaction['debit_entry']['amount']['amount_value'],
-                    transaction['debit_entry']['amount']['currency'],
-                    transaction['credit_entry']['entry_id'],
-                    transaction['credit_entry']['account']['account_number'],
-                    transaction['credit_entry']['account']['currency'],
-                    transaction['credit_entry']['amount']['amount_value'],
-                    transaction['credit_entry']['amount']['currency'],
-                    transaction['amount_purpose']
-                ))
-                print(f"Inserted record {i} of {total_records}")
-
+            
         conn.commit()
         cursor.close()
         conn.close()
 
 
-import sys
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
