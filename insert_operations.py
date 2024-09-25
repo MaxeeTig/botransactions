@@ -12,6 +12,30 @@ db_config = {
 }
 
 
+all_tags = [
+    'acq_inst_bin', 'acquirer_account_number', 'acquirer_inst_id', 'acquirer_merchant_id', 'acquirer_network_id', 
+    'acquirer_terminal_id', 'auth_data_account_cnvt_rate', 'auth_data_acq_device_proc_result', 'auth_data_acq_resp_code', 'auth_data_addl_data', 
+    'auth_data_amounts', 'auth_data_atc', 'auth_data_auth_tag', 'auth_data_auth_transaction_id', 'auth_data_bin_amount',
+    'auth_data_bin_cnvt_rate', 'auth_data_bin_currency', 'auth_data_card_capture_cap', 'auth_data_card_data_input_cap', 'auth_data_card_data_input_mode',
+    'auth_data_card_data_output_cap', 'auth_data_card_presence', 'auth_data_cat_level', 'auth_data_certificate_method', 'auth_data_crdh_auth_cap',
+    'auth_data_crdh_auth_entity', 'auth_data_crdh_auth_method', 'auth_data_crdh_presence', 'auth_data_cvr', 'auth_data_cvv2_presence',
+    'auth_data_cvv2_result', 'auth_data_device_date', 'auth_data_emv_data', 'auth_data_external_auth_id', 'auth_data_external_orig_id', 
+    'auth_data_is_advice', 'auth_data_is_completed', 'auth_data_is_early_emv', 'auth_data_is_repeat', 'auth_data_network_amount', 
+    'auth_data_network_cnvt_date', 'auth_data_network_currency', 'auth_data_pin_capture_cap', 'auth_data_pin_presence', 'auth_data_pos_cond_code', 
+    'auth_data_pos_entry_mode', 'auth_data_proc_mode', 'auth_data_proc_type', 'auth_data_resp_code', 'auth_data_service_code', 
+    'auth_data_terminal_operating_env', 'auth_data_terminal_output_cap', 'auth_data_trace_number', 'auth_data_tvr', 'auth_data_ucaf_indicator', 
+    'host_date', 'is_reversal', 'issuer_auth_code', 'issuer_card_country', 'issuer_card_expir_date', 
+    'issuer_card_id', 'issuer_card_instance_id', 'issuer_card_network_id', 'issuer_card_number', 'issuer_card_seq_number', 
+    'issuer_inst_id', 'issuer_network_id', 'mcc', 'merchant_city', 'merchant_country', 
+    'merchant_name', 'merchant_number', 'merchant_postcode', 'merchant_region', 'merchant_street', 
+    'msg_type', 'network_refnum', 'oper_amount_amount_value', 'oper_amount_currency', 'oper_date', 
+    'oper_id', 'oper_surcharge_amount_amount_value', 'oper_surcharge_amount_currency', 'oper_type', 'original_id', 
+    'originator_refnum', 'payment_order_id', 'status', 'sttl_amount_amount_value', 'sttl_amount_currency', 
+    'sttl_type', 'terminal_number', 'terminal_type', 'transaction_amount_purpose', 'transaction_conversion_rate',
+    'transaction_credit_entry', 'transaction_debit_entry', 'transaction_fee', 'transaction_posting_date', 'transaction_transaction_id',
+    'transaction_transaction_type'
+]
+
 def parse_xml(file_path):
      tree = ET.parse(file_path)
      root = tree.getroot()
