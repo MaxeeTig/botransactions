@@ -76,7 +76,7 @@ def insert_operations(operations):
         total_records = len(operations)
         for i, operation in enumerate(operations, 1):
             # here is set of checking for operations parameters to skip
-            if operation['oper)type'] == "OPTP0401":
+            if operation['oper_type'] == "OPTP0401":
                 print(f"Skipping record {i} of {total_records} due to OPTP0401")
                 continue
 
