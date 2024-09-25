@@ -197,7 +197,7 @@ def insert_operations(operations):
                         operation['transaction_transaction_id'],
                         operation['transaction_transaction_type']
                     ))
-                print(f"Inserted record {i} of {total_records}")
+                    print(f"Inserted record {i} of {total_records}")
             else:
                 print(f"Skipping record {i} of {total_records} due to duplicate oper_id: {operation['oper_id']}")
 
