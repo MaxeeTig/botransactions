@@ -77,8 +77,86 @@ def insert_operations(operations):
         for i, operation in enumerate(operations, 1):
             # here is set of checking for operations parameters to skip
             if operation['oper_type'] == "OPTP0401":
-                print(f"Skipping record {i} of {total_records} due to OPTP0401")
+                print(f"Skipping record {i} of {total_records} OPTP0401 - set acc bal")
                 continue
+
+            if operation['oper_type'] == "OPTP0019":
+                print(f"Skipping record {i} of {total_records} OPTP0019 - fee")
+                continue
+
+            if operation['oper_type'] == "OPTP0171":
+                print(f"Skipping record {i} of {total_records} OPTP0171 - chng acc status")
+                continue
+            
+            if operation['oper_type'] == "OPTP0071":
+                print(f"Skipping record {i} of {total_records} OPTP0071 - PIN reset")
+                continue
+            
+            if operation['oper_type'] == "OPTP1001":
+                print(f"Skipping record {i} of {total_records} OPTP1001 - credit limit")
+                continue
+
+            if operation['oper_type'] == "OPTP0032":
+                print(f"Skipping record {i} of {total_records} OPTP0032 - cust check")
+                continue
+            
+            if operation['oper_type'] == "OPTP0030":
+                print(f"Skipping record {i} of {total_records} OPTP0030 - bal enq")
+                continue
+
+            if operation['oper_type'] == "OPTP0801":
+                print(f"Skipping record {i} of {total_records} OPTP0801 - atm ")
+                continue
+
+            if re.match(r'^OPTP08', operation['oper_type']):  # Use re.match to check if oper_type starts with "OPTP08"
+                 print(f"Skipping record {i} of {total_records} OPTP08* - atm ")
+                 continue
+
+            if operation['oper_type'] == "OPTP0172":
+                print(f"Skipping record {i} of {total_records} OPTP0172 - chng card status")
+                continue
+
+            if operation['oper_type'] == "OPTP0173":
+                print(f"Skipping record {i} of {total_records} OPTP0173 - add service")
+                continue
+            
+            if operation['status'] == "OPST0402":
+                print(f"Skipping record {i} of {total_records} OPST0402 - auth unhold")
+                continue
+
+            if operation['status'] == "OPST0501":
+                print(f"Skipping record {i} of {total_records} OPST0501 - not success")
+                continue
+
+            if operation['oper_type'] == "OPTP0174":
+                print(f"Skipping record {i} of {total_records} OPTP0174 - rm service")
+                continue
+
+            if operation['oper_type'] == "OPTP0019":
+                print(f"Skipping record {i} of {total_records} OPTP0019 - fee")
+                continue
+
+            if operation['oper_type'] == "OPTP0402":
+                print(f"Skipping record {i} of {total_records} OPTP0402 - dt adj")
+                continue
+
+            if operation['oper_type'] == "OPTP0422":
+                print(f"Skipping record {i} of {total_records} OPTP0422 - cr adj")
+                continue
+
+
+
+            if operation['acquirer_merchant_id'] == "10000089":
+                print(f"Skipping record {i} of {total_records} test operaton MID 10000089")
+                continue
+
+            if operation['transaction_transaction_type'] == "TRNT0107":
+                print(f"Skipping record {i} of {total_records} CBS top-up ")
+                continue
+        
+
+
+        # end of filters
 
             print(f"Inserting record {i} of {total_records} {operation['oper_id']}")
             # Insert operation data 5 in line x 20 lines + 1
