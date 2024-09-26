@@ -2,6 +2,7 @@ import sys
 import xml.etree.ElementTree as ET
 import mysql.connector
 from mysql.connector import errorcode
+import re  # Import the re module
 
 # Database connection parameters
 db_config = {
@@ -104,8 +105,8 @@ def insert_operations(operations):
                 print(f"Skipping record {i} of {total_records} OPTP0030 - bal enq")
                 continue
 
-            if operation['oper_type'] == "OPTP0801":
-                print(f"Skipping record {i} of {total_records} OPTP0801 - atm ")
+            if re.match(r'^OPTP08', operation['oper_type']):  # Use re.match to check if oper_type starts with "OPTP08"
+                print(f"Skipping record {i} of {total_records} OPTP08* - atm ")
                 continue
 
             if re.match(r'^OPTP08', operation['oper_type']):  # Use re.match to check if oper_type starts with "OPTP08"
