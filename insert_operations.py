@@ -85,6 +85,34 @@ def insert_operations(operations):
                 print(f"Skipping record {i} of {total_records} OPTP0019 - fee")
                 continue
 
+            if operation['oper_type'] == "OPTP0027":
+                print(f"Skipping record {i} of {total_records} OPTP0027 - notif")
+                continue
+        
+            if operation['oper_type'] == "OPTP0029":
+                print(f"Skipping record {i} of {total_records} OPTP0029 - fee coll")
+                continue
+            
+            if operation['oper_type'] == "OPTP0039":
+                print(f"Skipping record {i} of {total_records} OPTP0039 - statement")
+                continue
+
+            if operation['oper_type'] == "OPTP0038":
+                print(f"Skipping record {i} of {total_records} OPTP0038 - statement")
+                continue
+
+            if operation['oper_type'] == "OPTP0119":
+                print(f"Skipping record {i} of {total_records} OPTP0119 - iss fee")
+                continue
+
+            if operation['oper_type'] == "OPTP0403":
+                print(f"Skipping record {i} of {total_records} OPTP0403 - set limit")
+                continue            
+            
+            if operation['oper_type'] == "OPTP0690":
+                print(f"Skipping record {i} of {total_records} OPTP0690 - cr virt card ")
+                continue            
+            
             if operation['oper_type'] == "OPTP0171":
                 print(f"Skipping record {i} of {total_records} OPTP0171 - chng acc status")
                 continue
@@ -109,12 +137,20 @@ def insert_operations(operations):
                 print(f"Skipping record {i} of {total_records} OPTP08* - atm ")
                 continue
 
-            if re.match(r'^OPTP08', str(operation['oper_type'])):  # Use re.match to check if oper_type starts with "OPTP08"
-                 print(f"Skipping record {i} of {total_records} OPTP08* - atm ")
-                 continue
+            if re.match(r'^OPTP5', str(operation['oper_type'])):  # Use re.match to check if oper_type starts with "OPTP5"
+                print(f"Skipping record {i} of {total_records} OPTP5* - insternal DBO")
+                continue
+
+            if re.match(r'^OPTP7', str(operation['oper_type'])):  # Use re.match to check if oper_type starts with "OPTP7"
+                print(f"Skipping record {i} of {total_records} OPTP7* - internal DBO ")
+                continue
 
             if operation['oper_type'] == "OPTP0172":
                 print(f"Skipping record {i} of {total_records} OPTP0172 - chng card status")
+                continue
+
+            if operation['oper_type'] == "OPTP9999":
+                print(f"Skipping record {i} of {total_records} OPTP9999 - custom DBO")
                 continue
 
             if operation['oper_type'] == "OPTP0173":
