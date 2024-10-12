@@ -53,13 +53,17 @@ def insert_mcc(mcc):
             """
             cursor.execute(check_duplicate_query, (mcc['mcc'],))
             if cursor.fetchone() is None:
+                    irs_reportable = mcc['irs_reportable']
+                    if irs_reportable.lower() not in ['yes', 'no']:
+                        irs_reportable = 'Yes'
+
                     cursor.execute(insert_mcc_query, (
 			mcc['mcc'], 
 			mcc['edited_description'],
 			mcc['combined_description'],
 			mcc['usda_description'],
 			mcc['irs_description'],
-			mcc['irs_reportable']
+			irs_reportable
                     ))
                     print(f"Inserted record {i} of {total_records}")
             else:
