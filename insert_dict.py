@@ -4,8 +4,8 @@ from mysql.connector import errorcode
 
 # Database connection parameters
 db_config = {
-    'user': 'root',
-    'password': 'WYzMP2trak',
+    'user': 'svbo',
+    'password': 'svbopwd',
     'host': 'localhost',
     'database': 'botransactions'
 }
@@ -14,7 +14,7 @@ import csv
 
 def parse_csv(file_path):
     dict_list = []
-    with open(file_path, mode='r', encoding='utf-8') as file:
+    with open(file_path, mode='r', encoding='latin1') as file:
         reader = csv.DictReader(file, delimiter=';')
         for row in reader:
             dict_list.append(row)
@@ -40,35 +40,35 @@ def insert_dict(dict_data):
         total_records = len(dict_data)
         for i, dict_item in enumerate(dict_data, 1):
 
-            print(f"Inserting record {i} of {total_records} {dict_item['ID']}")
+            print(f"Inserting record {i} of {total_records} {dict_item['id']}")
 
             insert_dict_query = """
             INSERT INTO dict_table (
-                ID, DICT, CODE, KEY, TEXT_E, ENTITY_TYPE, IS_NUMERIC, IS_EDITABLE, INST_ID, MODULE_CODE
+                id, dict, code, dkey, text_e, entity_type, is_numeric, is_editable, inst_id, module_code
             ) VALUES (
                 %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
             )
             """
             check_duplicate_query = """
-            SELECT ID FROM dict_table WHERE ID = %s
+            SELECT id FROM dict_table WHERE id = %s
             """
-            cursor.execute(check_duplicate_query, (dict_item['ID'],))
+            cursor.execute(check_duplicate_query, (dict_item['id'],))
             if cursor.fetchone() is None:
                     cursor.execute(insert_dict_query, (
-                        dict_item['ID'], 
-                        dict_item['DICT'],
-                        dict_item['CODE'],
-                        dict_item['KEY'],
-                        dict_item['TEXT_E'],
-                        dict_item['ENTITY_TYPE'],
-                        dict_item['IS_NUMERIC'],
-                        dict_item['IS_EDITABLE'],
-                        dict_item['INST_ID'],
-                        dict_item['MODULE_CODE']
+                        dict_item['id'], 
+                        dict_item['dict'],
+                        dict_item['code'],
+                        dict_item['dkey'],
+                        dict_item['text_e'],
+                        dict_item['entity_type'],
+                        dict_item['is_numeric'],
+                        dict_item['is_editable'],
+                        dict_item['inst_id'],
+                        dict_item['module_code']
                     ))
                     print(f"Inserted record {i} of {total_records}")
             else:
-                print(f"Skipping record {i} of {total_records} due to duplicate ID: {dict_item['ID']}")
+                print(f"Skipping record {i} of {total_records} due to duplicate id: {dict_item['id']}")
 
             
         conn.commit()
