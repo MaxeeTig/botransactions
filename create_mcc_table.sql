@@ -1,4 +1,4 @@
-CREATE TABLE mcc_table (
+CREATE TABLE mcc (
     mcc INT PRIMARY KEY,
     edited_description VARCHAR(255),
     combined_description VARCHAR(255),
