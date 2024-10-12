@@ -4,8 +4,8 @@ from mysql.connector import errorcode
 
 # Database connection parameters
 db_config = {
-    'user': 'root',
-    'password': 'WYzMP2trak',
+    'user': 'svbo',
+    'password': 'svbopwd',
     'host': 'localhost',
     'database': 'botransactions'
 }
@@ -14,7 +14,7 @@ import csv
 
 def parse_csv(file_path):
     mcc_list = []
-    with open(file_path, mode='r', encoding='utf-8') as file:
+    with open(file_path, mode='r', encoding='latin1') as file:
         reader = csv.DictReader(file, delimiter=';')
         for row in reader:
             mcc_list.append(row)
