@@ -1,3 +1,4 @@
+use botransactions;
 CREATE TABLE mcc (
     mcc INT PRIMARY KEY,
     edited_description VARCHAR(255),

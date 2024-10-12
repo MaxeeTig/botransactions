@@ -6,8 +6,8 @@ import re  # Import the re module
 
 # Database connection parameters
 db_config = {
-    'user': 'root',
-    'password': 'WYzMP2trak',
+    'user': 'svbo',
+    'password': 'svbopwd',
     'host': 'localhost',
     'database': 'botransactions'
 }

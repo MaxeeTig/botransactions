@@ -1,3 +1,4 @@
+use botransactions;
 CREATE TABLE operations (
      id INT AUTO_INCREMENT PRIMARY KEY,
      acq_inst_bin VARCHAR(25),

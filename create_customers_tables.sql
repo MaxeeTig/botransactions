@@ -1,3 +1,4 @@
+use botransactions;
 CREATE TABLE customers (
     customer_id VARCHAR(255) PRIMARY KEY,
     inst_id VARCHAR(255) NOT NULL,

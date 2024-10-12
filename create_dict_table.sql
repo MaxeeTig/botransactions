@@ -1,12 +1,13 @@
+use botransactions;
 CREATE TABLE dict_table (
-    ID INT PRIMARY KEY,
-    DICT VARCHAR(255),
-    CODE VARCHAR(255),
-    KEY VARCHAR(255),
-    TEXT_E VARCHAR(255),
-    ENTITY_TYPE VARCHAR(255),
-    IS_NUMERIC BOOLEAN,
-    IS_EDITABLE BOOLEAN,
-    INST_ID INT,
-    MODULE_CODE VARCHAR(255)
+    id INT PRIMARY KEY,
+    dict VARCHAR(10),
+    code VARCHAR(10),
+    dkey VARCHAR(15),
+    text_e VARCHAR(2048),
+    entity_type VARCHAR(10),
+    is_numeric BOOLEAN,
+    is_editable BOOLEAN,
+    inst_id INT,
+    module_code VARCHAR(10)
 );
