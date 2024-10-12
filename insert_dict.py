@@ -79,7 +79,7 @@ def insert_dict(dict_data):
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Usage: python insert_mcc.py <csv_file>")
+        print("Usage: python insert_dict.py <csv_file>")
         sys.exit(1)
 
     csv_file = sys.argv[1]

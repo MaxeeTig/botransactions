@@ -10,11 +10,6 @@ db_config = {
     'database': 'botransactions'
 }
 
-
-all_tags = [
-    'mcc', 'edited_description','combined_description','usda_description','irs_description','irs_reportable'
-]
-
 import csv
 
 def parse_csv(file_path):
