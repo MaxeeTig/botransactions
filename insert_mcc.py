@@ -15,12 +15,15 @@ all_tags = [
     'mcc', 'edited_description','combined_description','usda_description','irs_description','irs_reportable'
 ]
 
+import csv
+
 def parse_csv(file_path):
-
-     mcc = []
-
-
-     return mcc
+    mcc_list = []
+    with open(file_path, mode='r', encoding='utf-8') as file:
+        reader = csv.DictReader(file, delimiter=';')
+        for row in reader:
+            mcc_list.append(row)
+    return mcc_list
 
 
 def insert_mcc(mcc):
@@ -79,7 +82,7 @@ if __name__ == "__main__":
         print("Usage: python insert_mcc.py <csv_file>")
         sys.exit(1)
 
-    xml_file = sys.argv[1]
+    csv_file = sys.argv[1]
     print(f"Parsing file: {csv_file}")
     mcc = parse_csv(csv_file)
     insert_mcc(mcc)
