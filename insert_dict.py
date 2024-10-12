@@ -13,15 +13,15 @@ db_config = {
 import csv
 
 def parse_csv(file_path):
-    mcc_list = []
+    dict_list = []
     with open(file_path, mode='r', encoding='utf-8') as file:
         reader = csv.DictReader(file, delimiter=';')
         for row in reader:
-            mcc_list.append(row)
-    return mcc_list
+            dict_list.append(row)
+    return dict_list
 
 
-def insert_mcc(mcc):
+def insert_dict(dict_data):
     try:
         conn = mysql.connector.connect(**db_config)
         
@@ -37,33 +37,38 @@ def insert_mcc(mcc):
 
         cursor = conn.cursor()
 
-        total_records = len(mcc)
-        for i, mcc in enumerate(mcc, 1):
+        total_records = len(dict_data)
+        for i, dict_item in enumerate(dict_data, 1):
 
-            print(f"Inserting record {i} of {total_records} {mcc['mcc']}")
+            print(f"Inserting record {i} of {total_records} {dict_item['ID']}")
 
-            insert_mcc_query = """
-            INSERT INTO mcc (
-		mcc, edited_description, combined_description, usda_description, irs_description, irs_reportable
+            insert_dict_query = """
+            INSERT INTO dict_table (
+                ID, DICT, CODE, KEY, TEXT_E, ENTITY_TYPE, IS_NUMERIC, IS_EDITABLE, INST_ID, MODULE_CODE
             ) VALUES (
-            %s, %s, %s, %s, %s, %s)
+                %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
+            )
             """
             check_duplicate_query = """
-            SELECT mcc FROM mcc WHERE mcc = %s
+            SELECT ID FROM dict_table WHERE ID = %s
             """
-            cursor.execute(check_duplicate_query, (mcc['mcc'],))
+            cursor.execute(check_duplicate_query, (dict_item['ID'],))
             if cursor.fetchone() is None:
-                    cursor.execute(insert_mcc_query, (
-			mcc['mcc'], 
-			mcc['edited_description'],
-			mcc['combined_description'],
-			mcc['usda_description'],
-			mcc['irs_description'],
-			mcc['irs_reportable']
+                    cursor.execute(insert_dict_query, (
+                        dict_item['ID'], 
+                        dict_item['DICT'],
+                        dict_item['CODE'],
+                        dict_item['KEY'],
+                        dict_item['TEXT_E'],
+                        dict_item['ENTITY_TYPE'],
+                        dict_item['IS_NUMERIC'],
+                        dict_item['IS_EDITABLE'],
+                        dict_item['INST_ID'],
+                        dict_item['MODULE_CODE']
                     ))
                     print(f"Inserted record {i} of {total_records}")
             else:
-                print(f"Skipping record {i} of {total_records} due to duplicate mcc: {mcc['mcc']}")
+                print(f"Skipping record {i} of {total_records} due to duplicate ID: {dict_item['ID']}")
 
             
         conn.commit()
@@ -79,5 +84,5 @@ if __name__ == "__main__":
 
     csv_file = sys.argv[1]
     print(f"Parsing file: {csv_file}")
-    mcc = parse_csv(csv_file)
-    insert_mcc(mcc)
+    dict_data = parse_csv(csv_file)
+    insert_dict(dict_data)
