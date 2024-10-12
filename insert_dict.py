@@ -54,6 +54,10 @@ def insert_dict(dict_data):
             """
             cursor.execute(check_duplicate_query, (dict_item['id'],))
             if cursor.fetchone() is None:
+                    inst_id = dict_item['inst_id']
+                    if not inst_id:
+                        inst_id = '9999'
+
                     cursor.execute(insert_dict_query, (
                         dict_item['id'], 
                         dict_item['dict'],
@@ -63,7 +67,7 @@ def insert_dict(dict_data):
                         dict_item['entity_type'],
                         dict_item['is_numeric'],
                         dict_item['is_editable'],
-                        dict_item['inst_id'],
+                        inst_id,
                         dict_item['module_code']
                     ))
                     print(f"Inserted record {i} of {total_records}")
