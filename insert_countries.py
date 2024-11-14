@@ -86,5 +86,5 @@ if __name__ == "__main__":
     csv_file = sys.argv[1]
     print(f"Parsing file: {csv_file}")
     countries = parse_csv(csv_file)
-    print(countries)
+#    print(countries)
     insert_countries(countries)
