@@ -1,9 +1,9 @@
 
 CREATE TABLE countries (
-    id INT PRIMARY KEY,
+    id varchar(3),    
     ncode VARCHAR(3),
     sname VARCHAR(100),
     fname VARCHAR(100),
     aacode VARCHAR(2),
-    aacode VARCHAR(3)
+    aaacode VARCHAR(3)
 );

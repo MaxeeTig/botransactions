@@ -65,3 +65,23 @@ dem
 timezone          
 modification date 
  
+ 
+ 
+Need to create script named 'create_countries_table.sql' which creates mysql table named 'countries' to store 
+information about world countries. Table should contain the following fields:
+id	: integer 	
+ncode	:  numeric code varchar(3)
+sname	: short name varchar(100)
+fname	: full name varchar(100)
+aacode	: varchar(2)
+aaacode : varchar (3)
+
+Need to create python script named 'insert_countries.py' to insert content of file picked from command line into mysql table named 'countries'
+The data format in file is CSV ';" delimited text in utf8 encoding. need to insert from file all fields in order: 
+id	: integer 	
+ncode	:  numeric code varchar(3)
+sname	: short name varchar(100)
+fname	: full name varchar(100)
+aacode	: varchar(2)
+aaacode : varchar (3)
+as example of script please take 'insert_mcc.py'.
