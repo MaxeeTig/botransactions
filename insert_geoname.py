@@ -14,11 +14,17 @@ import csv
 
 def parse_tab_file(file_path):
     geoname_list = []
-    fieldnames = ['geonameid', 'name', 'asciiname', 'alternatenames', 'country_code']
     with open(file_path, mode='r', encoding='utf8') as file:
-        reader = csv.DictReader(file, delimiter='\t', fieldnames=fieldnames)
+        reader = csv.reader(file, delimiter='\t')
         for row in reader:
-            geoname_list.append(row)
+            geoname_dict = {
+                'geonameid': row[0],
+                'name': row[1],
+                'asciiname': row[2],
+                'alternatenames': row[3],
+                'country_code': row[8]
+            }
+            geoname_list.append(geoname_dict)
     return geoname_list
 
 
