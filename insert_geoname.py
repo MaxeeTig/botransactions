@@ -64,7 +64,7 @@ def insert_geoname(geoname):
                         geoname['geonameid'],
                         geoname['name'],
                         geoname['asciiname'],
-                        geoname['alternatenames'],
+                        geoname['alternatenames'].encode('utf-8').decode('utf-8'),
                         geoname['country_code']
                     ))
                     print(f"Inserted record {i} of {total_records}")
