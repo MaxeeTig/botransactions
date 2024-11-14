@@ -68,3 +68,14 @@ def insert_geoname(geoname):
         conn.commit()
         cursor.close()
         conn.close()
+
+
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: python insert_geoname.py <tab_file>")
+        sys.exit(1)
+
+    tab_file = sys.argv[1]
+    print(f"Parsing file: {tab_file}")
+    geoname = parse_tab_file(tab_file)
+    insert_geoname(geoname)
