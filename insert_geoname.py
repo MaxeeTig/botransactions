@@ -60,13 +60,27 @@ def insert_geoname(geoname):
             """
             cursor.execute(check_duplicate_query, (geoname['geonameid'],))
             if cursor.fetchone() is None:
-                    cursor.execute(insert_geoname_query, (
-                        geoname['geonameid'],
-                        geoname['name'],
-                        geoname['asciiname'],
-                        geoname['alternatenames'].encode('utf-8').decode('utf-8'),
-                        geoname['country_code']
-                    ))
+                    try:
+                        cursor.execute(insert_geoname_query, (
+                            geoname['geonameid'],
+                            geoname['name'],
+                            geoname['asciiname'],
+                            geoname['alternatenames'].encode('utf-8').decode('utf-8'),
+                            geoname['country_code']
+                        ))
+                    except mysql.connector.errors.DatabaseError as err:
+                        if 'Incorrect string value' in str(err):
+                            cleaned_alternatenames = ''.join([c for c in geoname['alternatenames'] if ord(c) < 128])
+                            print(f"Cleaned alternatenames: {cleaned_alternatenames}")
+                            cursor.execute(insert_geoname_query, (
+                                geoname['geonameid'],
+                                geoname['name'],
+                                geoname['asciiname'],
+                                cleaned_alternatenames,
+                                geoname['country_code']
+                            ))
+                        else:
+                            raise err
                     print(f"Inserted record {i} of {total_records}")
             else:
                 print(f"Skipping record {i} of {total_records} due to duplicate geonameid: {geoname['geonameid']}")
