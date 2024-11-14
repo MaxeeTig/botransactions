@@ -15,10 +15,19 @@ db_config = {
 def parse_csv(file_path):
     countries_list = []
     with open(file_path, mode='r', encoding='utf8') as file:
-        reader = csv.DictReader(file, delimiter=';')
+        reader = csv.reader(file, delimiter=';')
         for row in reader:
-            countries_list.append(row)
+            country_dict = {
+                'id': row[0],
+                'ncode': row[1],
+                'sname': row[2],
+                'fname': row[3],
+                'aacode': row[4],
+                'aaacode': row[5],
+            }
+            countries_list.append(country_dict)
     return countries_list
+
 
 def insert_countries(countries):
     try:
@@ -77,4 +86,5 @@ if __name__ == "__main__":
     csv_file = sys.argv[1]
     print(f"Parsing file: {csv_file}")
     countries = parse_csv(csv_file)
+    print(countries)
     insert_countries(countries)
