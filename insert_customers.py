@@ -134,32 +134,61 @@ def insert_customers(customers):
 
             if existing_customer is None:
                 # Insert customer data
-                insert_customer_query = """INSERT INTO customers (
-                    customer, customer_address, customer_address_address_name, customer_address_address_name_city, 
-                    customer_address_address_name_comment, customer_address_address_name_region, customer_address_address_name_street, customer_address_address_type, 
-                    customer_address_apartment, customer_address_country, customer_address_house, customer_company, 
-                    customer_company_company_name, customer_company_company_name_company_full_name, customer_company_company_name_company_short_name, customer_company_embossed_name, 
+                insert_customer_query = """
+                INSERT INTO customers (
+                    customer, customer_address, customer_address_address_name, customer_address_address_name_city,
+                    customer_address_address_name_comment, customer_address_address_name_region, customer_address_address_name_street, customer_address_address_type,
+                    customer_address_apartment, customer_address_country, customer_address_house, customer_company,
+                    customer_company_company_name, customer_company_company_name_company_full_name, customer_company_company_name_company_short_name, customer_company_embossed_name,
                     customer_company_identity_card, customer_company_identity_card_id_issue_date, customer_company_identity_card_id_number, customer_company_identity_card_id_series,
                     customer_company_identity_card_id_type, customer_company_incorp_form, customer_contact, customer_contact_contact_data,
-                    customer_contact_contact_data_commun_address, customer_contact_contact_data_commun_method, customer_contact_contact_data_start_date, customer_contact_contact_type, 
-                    customer_contact_job_title, customer_contact_person, customer_contact_person_identity_card, customer_contact_person_identity_card_id_number, 
+                    customer_contact_contact_data_commun_address, customer_contact_contact_data_commun_method, customer_contact_contact_data_start_date, customer_contact_contact_type,
+                    customer_contact_job_title, customer_contact_person, customer_contact_person_identity_card, customer_contact_person_identity_card_id_number,
                     customer_contact_person_identity_card_id_series, customer_contact_person_identity_card_id_type, customer_contact_person_person_name, customer_contact_person_person_name_first_name,
-                    customer_contact_person_person_name_second_name, customer_contact_person_person_name_surname, customer_contact_preferred_lang, customer_contract, 
-                    customer_contract_agent_id,  customer_contract_agent_number, customer_contract_contract_number, customer_contract_contract_type, 
-                    customer_contract_end_date, customer_contract_product_id, customer_contract_product_number, customer_contract_start_date, 
-                    customer_customer_category, customer_customer_ext_id, customer_customer_ext_type, customer_customer_number, 
-                    customer_customer_relation, customer_inst_id, customer_money_laundry_reason, customer_money_laundry_risk, 
-                    customer_nationality, customer_note, customer_note_note_content, customer_note_note_content_note_header, 
-                    customer_note_note_content_note_text, customer_note_note_type, customer_person, customer_person_birthday, 
-                    customer_person_gender, customer_person_identity_card, customer_person_identity_card_id_issuer, customer_person_identity_card_id_number, 
-                    customer_person_identity_card_id_series, customer_person_identity_card_id_type, customer_person_person_name, customer_person_person_name_first_name, 
-                    customer_person_person_name_second_name, customer_person_person_name_surname, customer_person_person_title, customer_person_place_of_birth, 
-                    customer_person_suffix, customer_resident, customer_status, file_id, 
+                    customer_contact_person_person_name_second_name, customer_contact_person_person_name_surname, customer_contact_preferred_lang, customer_contract,
+                    customer_contract_agent_id,  customer_contract_agent_number, customer_contract_contract_number, customer_contract_contract_type,
+                    customer_contract_end_date, customer_contract_product_id, customer_contract_product_number, customer_contract_start_date,
+                    customer_customer_category, customer_customer_ext_id, customer_customer_ext_type, customer_customer_number,
+                    customer_customer_relation, customer_inst_id, customer_money_laundry_reason, customer_money_laundry_risk,
+                    customer_nationality, customer_note, customer_note_note_content, customer_note_note_content_note_header,
+                    customer_note_note_content_note_text, customer_note_note_type, customer_person, customer_person_birthday,
+                    customer_person_gender, customer_person_identity_card, customer_person_identity_card_id_issuer, customer_person_identity_card_id_number,
+                    customer_person_identity_card_id_series, customer_person_identity_card_id_type, customer_person_person_name, customer_person_person_name_first_name,
+                    customer_person_person_name_second_name, customer_person_person_name_surname, customer_person_person_title, customer_person_place_of_birth,
+                    customer_person_suffix, customer_resident, customer_status, file_id,
                     file_type, inst_id
                 ) VALUES (
                     %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
-                    %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
                     %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
-                    %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
+                    %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
+                    %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,
                     %s, %s)
-                    """
+                """
+                cursor.execute(insert_customer_query, (
+                    customer['customer'], customer['customer_address'], customer['customer_address_address_name'], customer['customer_address_address_name_city'],
+                    customer['customer_address_address_name_comment'], customer['customer_address_address_name_region'], customer['customer_address_address_name_street'], customer['customer_address_address_type'],
+                    customer['customer_address_apartment'], customer['customer_address_country'], customer['customer_address_house'], customer['customer_company'],
+                    customer['customer_company_company_name'], customer['customer_company_company_name_company_full_name'], customer['customer_company_company_name_company_short_name'], customer['customer_company_embossed_name'],
+                    customer['customer_company_identity_card'], customer['customer_company_identity_card_id_issue_date'], customer['customer_company_identity_card_id_number'], customer['customer_company_identity_card_id_series'],
+                    customer['customer_company_identity_card_id_type'], customer['customer_company_incorp_form'], customer['customer_contact'], customer['customer_contact_contact_data'],
+                    customer['customer_contact_contact_data_commun_address'], customer['customer_contact_contact_data_commun_method'], customer['customer_contact_contact_data_start_date'], customer['customer_contact_contact_type'],
+                    customer['customer_contact_job_title'], customer['customer_contact_person'], customer['customer_contact_person_identity_card'], customer['customer_contact_person_identity_card_id_number'],
+                    customer['customer_contact_person_identity_card_id_series'], customer['customer_contact_person_identity_card_id_type'], customer['customer_contact_person_person_name'], customer['customer_contact_person_person_name_first_name'],
+                    customer['customer_contact_person_person_name_second_name'], customer['customer_contact_person_person_name_surname'], customer['customer_contact_preferred_lang'], customer['customer_contract'],
+                    customer['customer_contract_agent_id'],  customer['customer_contract_agent_number'], customer['customer_contract_contract_number'], customer['customer_contract_contract_type'],
+                    customer['customer_contract_end_date'], customer['customer_contract_product_id'], customer['customer_contract_product_number'], customer['customer_contract_start_date'],
+                    customer['customer_customer_category'], customer['customer_customer_ext_id'], customer['customer_customer_ext_type'], customer['customer_customer_number'],
+                    customer['customer_customer_relation'], customer['customer_inst_id'], customer['customer_money_laundry_reason'], customer['customer_money_laundry_risk'],
+                    customer['customer_nationality'], customer['customer_note'], customer['customer_note_note_content'], customer['customer_note_note_content_note_header'],
+                    customer['customer_note_note_content_note_text'], customer['customer_note_note_type'], customer['customer_person'], customer['customer_person_birthday'],
+                    customer['customer_person_gender'], customer['customer_person_identity_card'], customer['customer_person_identity_card_id_issuer'], customer['customer_person_identity_card_id_number'],
+                    customer['customer_person_identity_card_id_series'], customer['customer_person_identity_card_id_type'], customer['customer_person_person_name'], customer['customer_person_person_name_first_name'],
+                    customer['customer_person_person_name_second_name'], customer['customer_person_person_name_surname'], customer['customer_person_person_title'], customer['customer_person_place_of_birth'],
+                    customer['customer_person_suffix'], customer['customer_resident'], customer['customer_status'], customer['file_id'],
+                    customer['file_type'], customer['inst_id']
+                ))
+                conn.commit()
+                print(f"Inserted record {i} successfully")
+
+        cursor.close()
+        conn.close()
