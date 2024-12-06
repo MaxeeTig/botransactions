@@ -45,8 +45,9 @@ def generate_mysql_script(tags, tag_data):
         if tag == 'customer_id':
             column_definition += " PRIMARY KEY"
 
-        script_lines.append(column_definition)
+        script_lines.append(column_definition + ",")
 
+    script_lines[-1] = script_lines[-1].rstrip(",")  # Remove the trailing comma from the last line
     script_lines.append(");")
     return "\n".join(script_lines)
 
