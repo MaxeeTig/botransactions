@@ -6,15 +6,24 @@ def extract_unique_tags(xml_file):
     root = tree.getroot()
     tags = set()
 
-    for elem in root.iter():
-        tags.add(elem.tag)
+    def recursive_tag_extraction(element, prefix):
+        tag = element.tag
+        if '}' in tag:
+            tag = tag.split('}', 1)[1]
+        current_tag = f"{prefix}_{tag}" if prefix else tag
+        tags.add(current_tag)
+        for child in element:
+            recursive_tag_extraction(child, current_tag)
+
+    for elem in root:
+        recursive_tag_extraction(elem, '')
 
     return list(tags)
 
 def write_tags_to_file(tags, output_file):
     with open(output_file, 'w') as f:
         f.write("all_tags = [\n")
-        for tag in tags:
+        for tag in sorted(tags):
             f.write(f"    '{tag}'\n")
         f.write("]\n")
 
