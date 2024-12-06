@@ -18,7 +18,11 @@ def extract_unique_tags(xml_file):
         if element.text and element.text.strip():
             text_length = len(element.text.strip())
             data_type = 'VARCHAR'  # Default data type
-            tag_data[current_tag] = (data_type, text_length)
+            if current_tag in tag_data:
+                if text_length > tag_data[current_tag][1]:
+                    tag_data[current_tag] = (data_type, text_length)
+            else:
+                tag_data[current_tag] = (data_type, text_length)
 
         for child in element:
             recursive_tag_extraction(child, current_tag)
