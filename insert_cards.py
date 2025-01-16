@@ -112,6 +112,7 @@ def insert_cards(cards):
             insert_card_query = """
             INSERT INTO cards (card_id, inst_id, card_number, card_mask, card_type, country, category, reg_date, customer_id, contract_id)
             VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+
             """
             cursor.execute(insert_card_query, (
                 card['card_id'],

@@ -1,3 +1,6 @@
+# Need to update import to divide by 100 all imported amounts 
+
+
 import sys
 import xml.etree.ElementTree as ET
 import mysql.connector
