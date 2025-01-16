@@ -82,16 +82,8 @@ def parse_xml(file_path):
                 'currency': card.find('ns:account/ns:currency', namespace).text if card.find('ns:account/ns:currency', namespace) is not None else None,
                 'account_status': card.find('ns:account/ns:account_status', namespace).text if card.find('ns:account/ns:account_status', namespace) is not None else None,
                 'link_flag': card.find('ns:account/ns:link_flag', namespace).text if card.find('ns:account/ns:link_flag', namespace) is not None else None
-            },
-            'flexible_data': []
-        }
-
-        for flexible_data in card.findall('ns:flexible_data', namespace):
-            flexible_data_item = {
-                'field_name': flexible_data.find('ns:field_name', namespace).text,
-                'field_value': flexible_data.find('ns:field_value', namespace).text
             }
-            card_data['flexible_data'].append(flexible_data_item)
+        }
 
         cards.append(card_data)
 
@@ -279,19 +271,6 @@ def insert_cards(cards):
                     print(f"Skipped account record {i} of {total_records} due to duplicate account_id")
             else:
                 print(f"Skipped account record {i} of {total_records} due to missing account_id")
-
-            # Insert flexible data
-            for flexible_data in card['flexible_data']:
-                insert_flexible_data_query = """
-                INSERT INTO flexible_data (entity_type, field_name, field_value)
-                VALUES (%s, %s, %s)
-                """
-                cursor.execute(insert_flexible_data_query, (
-                    'Card',
-                    flexible_data['field_name'],
-                    flexible_data['field_value'] if flexible_data['field_value'] is not None else 'NONE',  # Provide a default value,ACSTACTV
-                ))
-                print(f"Inserted record {i} of {total_records}")
 
         conn.commit()
         cursor.close()
