@@ -44,7 +44,7 @@ def parse_xml(file_path):
                     'identity_card': {
                         'id_type': card.find('ns:cardholder/ns:person/ns:identity_card/ns:id_type', namespace).text if card.find('ns:cardholder/ns:person/ns:identity_card/ns:id_type', namespace) is not None else 'IDTP0001',  # Provide a default value
                         'id_series': card.find('ns:cardholder/ns:person/ns:identity_card/ns:id_series', namespace).text if card.find('ns:cardholder/ns:person/ns:identity_card/ns:id_series', namespace) is not None else '0000',  # Provide a default value
-                        'id_number': card.find('ns:cardholder/ns:person/ns:identity_card/ns:id_number', namespace).text if card.find('ns:cardholder/ns:person/ns:identity_card/ns:id_number', namespace) is not None else None
+                        'id_number': card.find('ns:cardholder/ns:person/ns:identity_card/ns:id_number', namespace).text if card.find('ns:cardholder/ns:person/ns:identity_card/ns:id_number', namespace) is not None else '000000'  # Provide a default value
                     }
                 },
                 'address': {
